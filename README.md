@@ -1,3 +1,3 @@
 # sunnyhills
 
-Our GitHub Repo!
+![Visualization of this repo](./diagram.svg)
