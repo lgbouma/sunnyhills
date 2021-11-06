@@ -9,6 +9,7 @@
 * Each exoplanet was selected because it is the only confirmed exoplanet in its host star's system, so you should not worry about recovering periods for multiple planets (because for all we know there are no other exoplanets in these stellar systems other than the one given for each). 
 * Once you've done this, I would like us to practice writing up our results. Thus, our final results should be nicely formatted mini-reports type set in LaTeX. Here's a template file I made you to use: https://www.overleaf.com/read/jrhrtbwtzrpp
 * This project will be our focus in November and I would like us to have it done before December! 
+* I think it would be best if we worked in groups of two for this. 
 
 
 ## Code Hints
