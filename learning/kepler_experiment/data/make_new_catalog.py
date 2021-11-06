@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # choose n random kepler objects that have confirmed planet and were detected with transit method
 # perhaps only choose systems with one planet
 # create a little write-up highlighting results
-raw_df = pd.read_csv('https://raw.githubusercontent.com/HarritonResearchLab/sunnyhills/main/learning/kepler_experiment/eu_exoplanet_catalog.csv')
+raw_df = pd.read_csv('https://raw.githubusercontent.com/HarritonResearchLab/sunnyhills/main/learning/kepler_experiment/data/eu_exoplanet_catalog.csv')
 
 columns = ['name', 'orbital_period', 'radius', 'semi_major_axis', 'detection_type', 'star_name', 'ra', 'dec', 'star_distance']
 
