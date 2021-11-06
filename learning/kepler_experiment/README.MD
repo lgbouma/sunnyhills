@@ -10,6 +10,7 @@
 * Once you've done this, I would like us to practice writing up our results. Thus, our final results should be nicely formatted mini-reports type set in LaTeX. Here's a template file I made you to use: https://www.overleaf.com/read/jrhrtbwtzrpp
 * This project will be our focus in November and I would like us to have it done before December! 
 * I think it would be best if we worked in groups of two for this. 
+* Make sure to normalize and flatten your data as in the lightkurve documentation demo.  
 
 
 ## Code Hints
