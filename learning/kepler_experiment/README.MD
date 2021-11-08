@@ -10,7 +10,9 @@
 * Once you've done this, I would like us to practice writing up our results. Thus, our final results should be nicely formatted mini-reports type set in LaTeX. Here's a template file I made you to use: https://www.overleaf.com/read/jrhrtbwtzrpp
 * This project will be our focus in November and I would like us to have it done before December! 
 * I think it would be best if we worked in groups of two for this. 
-* Make sure to normalize and flatten your data as in the lightkurve documentation demo.  
+* Make sure to normalize and flatten your data as in the lightkurve documentation demo. 
+* Also, as shown in the lightkurve demo linked above, search data by the exoplanet's host star name.  
+* I recommend saving phase-folded light curves for the top five highest power periods returned by the BLS periodogram for each object and then deciding which produces the cleanest folded transit.  
 
 
 ## Code Hints
