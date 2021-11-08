@@ -12,6 +12,7 @@
 * I think it would be best if we worked in groups of two for this. 
 * Make sure to normalize and flatten your data as in the lightkurve documentation demo. 
 * Also, as shown in the lightkurve demo linked above, search data by the exoplanet's host star name.  
+* I recommend saving phase-folded light curves for the top five highest power periods returned by the BLS periodogram for each object and then deciding which produces the cleanest folded transit.  
 
 
 ## Code Hints
