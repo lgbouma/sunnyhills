@@ -1,6 +1,7 @@
 import pandas as pd
 
-base_dir = input('base dir:~$ ')
+base_dir = '/Users/Research/Documents/GitHub/sunnyhills/learning/kepler_experiment/solutions/tk-rm-kr'
+#input('base dir:~$ ')
 
 def do_analysis(star_id, base_dir):
     import matplotlib.pyplot as plt
@@ -14,7 +15,7 @@ def do_analysis(star_id, base_dir):
 
     plot_dir =  base_dir + '/plots'
 
-    results_file = 'results.csv'
+    results_file = base_dir+'/results.csv'
 
     search_result = lk.search_lightcurve(star_id, author='Kepler', cadence='long')
     lc_collection = search_result.download_all()
@@ -40,10 +41,14 @@ def do_analysis(star_id, base_dir):
     plt.close()
 
     with open(results_file, 'a') as f:
-        f.write(star_id+','+str(planet_period)+'\n')
+        f.write(star_id+','+str(planet_period).replace(' d', '')+'\n')
 
+import os 
 for star_id in pd.read_csv(base_dir+'/data/sample_df.csv')['star_name']: 
-    if star_id !='Kepler-925':
+    used_ids = os.listdir(r'C:\Users\Research\Documents\GitHub\sunnyhills\learning\kepler_experiment\solutions\tk-rm-kr\plots')
+
+    used_ids = [i.replace('.png', '') for i in used_ids if i != '.gitkeep']
+    if star_id not in used_ids:
         do_analysis(star_id, base_dir)
 
 #/Users/Research/Documents/GitHub/sunnyhills/learning/kepler_experiment/solutions/tk-rm-kr
