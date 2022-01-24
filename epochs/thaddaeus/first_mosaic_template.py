@@ -11,7 +11,7 @@ mosaic = """
 fig = plt.figure(constrained_layout=True)
 ax_dict = fig.subplot_mosaic(mosaic)
 
-# to axis one of the subplots, do it like this: ac_dict['A'] (e.g. for subplot A)
+# to axis one of the subplots, do it like this: ax_dict['A'] (e.g. for subplot A)
 
 plt.show()
 
