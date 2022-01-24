@@ -10,11 +10,11 @@ def make_plot(tic_id, data_dir):
 
     ls_df = ls_df.dropna()
 
-    times = np.array(lc_df['time'])
-    fluxes = np.array(lc_df['flux'])
+    times = np.array(ls_df['time'])
+    fluxes = np.array(ls_df['flux'])
     mean_flux = np.mean(fluxes)
     fluxes = fluxes/mean_flux
-    flux_errs = np.array(lc_df['flux_err'])/mean_flux # FIX NORMALIZATION
+    flux_errs = np.array(ls_df['flux_err'])/mean_flux # FIX NORMALIZATION
     # FIX to use detrended / clipped lc
 
     ### MAKE PLOT
@@ -36,6 +36,8 @@ def make_plot(tic_id, data_dir):
     # max frequency = observation window / 3
     # min frequency = ???
 
+    # ls won't work when nans in array 
+    
     window_length = np.max(times)-np.min(times)
     frequencies, powers = LombScargle(times, fluxes, flux_errs).autopower(minimum_frequency=1/window_length, maximum_frequency=10)
     # max freq and min freq 
@@ -49,7 +51,7 @@ def make_plot(tic_id, data_dir):
     period = periods[np.argmax(powers)] # get period corresponding to highest power
     phased_dates = np.mod(times, period)/period # phase the dates
 
-    ax_dict['F'].scatter(phased_dates, fluxes)
+    ax_dict['F'].scatter(phased_dates, fluxes, s=3)
     ax_dict['F'].set(xlabel='Phase (P='+str(round(period,2))+' d)', ylabel='Normalized Flux (FIX)')
 
 
