@@ -34,7 +34,7 @@ def make_plot(tic_id, data_dir):
         EEF
         """
 
-    fig = plt.figure(constrained_layout=True)
+    fig = plt.figure(constrained_layout=True, figsize=(8,5))
     ax_dict = fig.subplot_mosaic(mosaic)
 
     # A is raw light curve
