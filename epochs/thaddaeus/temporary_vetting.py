@@ -63,7 +63,7 @@ def make_plot(tic_id, data_dir):
 
     ax_dict['D'].plot(periods, powers)
     
-    ax_dict['D'].set(xlabel='Period (d)', ylabel='Power', yscale='log')
+    ax_dict['D'].set(xlabel='Period (d)', ylabel='Power')#, yscale='log')
 
     grey_colors = ['lightgray','darkgray','dimgrey']
     for i in range(len(false_alarm_levels)-1,-1,-1): # Plot them in reverse order so the highest confidence label is 
