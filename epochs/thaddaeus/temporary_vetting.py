@@ -71,7 +71,8 @@ def make_plot(tic_id, data_dir):
         ax_dict['D'].axhline(y=(faps[i]), xmin=1/10, xmax=window_length/3, color = grey_colors[i],lw=1)
     
 
-    more_than_fap_mask = np.where(powers>faps[0])
+    fap_99 = faps[0]
+    more_than_fap_mask = np.where(powers>fap_99)
     periods = periods[more_than_fap_mask]
     powers = powers[more_than_fap_mask]
 
@@ -81,7 +82,7 @@ def make_plot(tic_id, data_dir):
 
     if len(sorted_periods)>0: 
         best_period = sorted_periods[0] # get period corresponding to highest power
-
+        best_period_power = sorted_powers[0]
     else: 
         best_period = 0
 
