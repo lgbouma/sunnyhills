@@ -70,15 +70,57 @@ def make_plot(tic_id, data_dir):
         #confidence_label = str(100*(1-false_alarm_levels[i]))+'% FAP'
         ax_dict['D'].axhline(y=(faps[i]), xmin=1/10, xmax=window_length/3, color = grey_colors[i],lw=1)
     
+
+    more_than_fap_mask = np.where(powers>faps[0])
+    periods = periods[more_than_fap_mask]
+    powers = powers[more_than_fap_mask]
+
+    sorted_indices = np.argsort(powers)[::-1]
+    sorted_powers = powers[sorted_indices][0:20]
+    sorted_periods = periods[sorted_indices][0:20]
+
+    if len(sorted_periods)>0: 
+        best_period = sorted_periods[0] # get period corresponding to highest power
+
+    else: 
+        best_period = 0
+
+    has_harmonic = False 
+
+    if best_period != 0: 
+        for i in range(2,6): 
+            lower = best_period/i
+            upper = best_period*i
+
+            for test_period in sorted_periods: 
+                lower_ratio = lower/test_period
+                upper_ratio = test_period/upper
+
+                if 1.01 > lower_ratio > 0.99: 
+                    has_harmonic = True
+                    ax_dict['D'].axvline(x=lower, ymin=0.8, ymax=1, color='indianred', lw=0.75) # replace with red x line midway through plot
+                
+                
+                
+                elif 0.99 < upper_ratio < 1.01: 
+                    ax_dict['D'].axvline(x=upper, ymin=0.8, ymax=1, color='indianred', lw=0.75)
+                    has_harmonic = True
+
+
     # sigma clipped light curve 
     ax_dict['E'].scatter(times, fluxes, s=3)
     ax_dict['E'].set(xlabel='Time (d)', ylabel=r'$\sigma$'+'-clipped Normalized Flux')
 
-    period = periods[np.argmax(powers)] # get period corresponding to highest power
-    phased_dates = np.mod(times, period)/period # phase the dates
+    e_xlabel = 'Phase (P='+str(round(best_period,2))+' d)'
 
-    ax_dict['F'].scatter(phased_dates, fluxes, s=3)
-    ax_dict['F'].set(xlabel='Phase (P='+str(round(period,2))+' d)', ylabel='Normalized Flux (FIX)')
+    if best_period != 0: 
+        phased_dates = np.mod(times, best_period)/best_period # phase the dates
+        ax_dict['F'].scatter(phased_dates, fluxes, s=3)
+        
+    else: 
+        e_xlabel = 'Phase (P= nan d)'
+
+    ax_dict['F'].set(xlabel=e_xlabel, ylabel='Normalized Flux (FIX)')
 
 
     # metadata to save after each iteration: 
@@ -90,7 +132,7 @@ def make_plot(tic_id, data_dir):
     > top_period
     > top_period_power
     > fap_99 
-    > top period is harmonic (True/False) # fix because is vs possesses is different 
+    > top period has harmonic (True/False)
     
     Flare Related: 
     > 
@@ -111,5 +153,5 @@ def make_plot(tic_id, data_dir):
     """
 
 lc_dir = './data/LightCurve_keys'
-tic_id = '118807628'
+tic_id = '47424873'
 make_plot(tic_id, lc_dir)
