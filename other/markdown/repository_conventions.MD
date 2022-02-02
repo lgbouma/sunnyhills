@@ -9,3 +9,4 @@
 
 ## Workflow
 * Please confirm with everybody in the group before making major changes that affect everyone else (e.g. changing commonly used functions drastically, changing file/path names along highly trafficked paths, changing data file headers, etc. 
+* Please initialize empty directories with ```.gitkeep``` files
