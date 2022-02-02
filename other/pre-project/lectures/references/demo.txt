@@ -1,2 +1,0 @@
-name,age,location 
-thaddaeus,17,california
