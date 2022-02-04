@@ -9,3 +9,6 @@
 
 ## Workflow
 * Please confirm with everybody in the group before making major changes that affect everyone else (e.g. changing commonly used functions drastically, changing file/path names along highly trafficked paths, changing data file headers, etc. 
+* dealing with meta data (if single row value per object, keep in metadata single file...otherwise, e.g. TLS (depth, period, etc.), store in separate files)
+* switch to feather files rather than csv
+* 
