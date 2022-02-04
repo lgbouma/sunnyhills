@@ -14,4 +14,4 @@
 ## Workflow
 * Please confirm with everybody in the group before making major changes that affect everyone else (e.g. changing commonly used functions drastically, changing file/path names along highly trafficked paths, changing data file headers, etc. 
 * Dealing with meta data: if single row value per object, keep in the current single metadata file (in which each row contains data for a different object with however many columns of information)...otherwise, e.g. TLS (depth, period, etc.), store in separate files within a sub-directory of results. 
-
+* After you read papers, please update our working bibliography (linked [here](https://github.com/HarritonResearchLab/sunnyhills/blob/main/other/markdown/working_bibliography.MD))
