@@ -10,7 +10,7 @@
 * [ ]
 
 ## History
-
+- [ ] [Ryan's research analysis on TransitLeastSquares](https://docs.google.com/document/d/1m5bG9GUdQZfolr4foCtGOQSdN3sQ6zNZ0e3ayIcTxBY/edit?usp=sharing)
 ## Best Papers
 
 ## Other
