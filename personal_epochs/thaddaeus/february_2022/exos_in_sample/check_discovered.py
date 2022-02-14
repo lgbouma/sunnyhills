@@ -27,7 +27,7 @@ def check_overlap():
     from astropy.coordinates import SkyCoord
     from astropy import units as u
 
-    nasa_df = pd.read_csv('./personal_epochs/thaddaeus/february_2022/concise_nasa_exoplanet_catalog.csv').sample(frac=1)
+    nasa_df = pd.read_csv('./personal_epochs/thaddaeus/february_2022/exos_in_sample/concise_nasa_exoplanet_catalog.csv').sample(frac=1)
 
     nasa_ids = np.array(nasa_df['hostname'])
     nasa_ras = np.array(nasa_df['ra'])
@@ -45,7 +45,7 @@ def check_overlap():
     for nasa_id, nasa_ra, nasa_dec in tqdm(zip(nasa_ids, nasa_ras, nasa_decs)): 
         
         for our_id, our_ra, our_dec in zip(our_gaia_ids, our_ras, our_decs): 
-            approx_sep = 3000*np.sqrt((nasa_ra-our_ra)**2+(nasa_dec-our_dec)**2)
+            approx_sep = 3600*np.sqrt((nasa_ra-our_ra)**2+(nasa_dec-our_dec)**2)
             if approx_sep <= 2: 
                 our_matched_ids = np.append(our_matched_ids, our_id)
                 nasa_matched_ids = np.append(nasa_matched_ids, nasa_id)
