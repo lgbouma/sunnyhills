@@ -28,3 +28,14 @@
 
 - mostly overlap in different detrending methods but not completely
   - 43.8% recovery rate combined
+
+## Altai Pony
+
+- make sure to verify that detrending algorithm can account for ramp ups at the end of TESS orbits
+  - can often cause false positive detections
+
+- can evaluate the accuracy of detrending algorithm by injecting fake flares `sample_flare_recovery`
+  - can plot results to figure out how many fake flares are recovered and what amplitude and frequency they are
+
+- ALtai Pony also has sigma clipping functionality through sigma parameter in `find_flares()`
+  - defaults to `flux_err`
