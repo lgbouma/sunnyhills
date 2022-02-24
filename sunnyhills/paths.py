@@ -6,4 +6,4 @@ import os, socket
 from sunnyhills import __path__
 
 DATADIR = os.path.join(os.path.dirname(__path__[0]), 'data')
-EPOCHSDIR = os.path.join(os.path.dirname(__path__[0]), 'epochs')
+EPOCHSDIR = os.path.join(os.path.dirname(__path__[0]), 'personal_epochs')
