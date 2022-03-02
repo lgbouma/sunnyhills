@@ -51,6 +51,8 @@ def download_and_preprocess(
     lc_list = [] # for detrended and "cleaned" light curves
     trend_list = []
 
+    new_raw_list = []
+
     for lc in raw_list:
 
         time = lc.time.value
@@ -66,6 +68,8 @@ def download_and_preprocess(
         # normalize around 1
         flux /= np.nanmedian(flux)
 
+        new_raw_list.append({'time':time, 'flux':flux})
+
         # remove outliers before local window detrending
         clipped_flux = slide_clip(time, flux, window_length=0.5, low=3,
                                   high=2, method='mad', center='median')
@@ -80,12 +84,13 @@ def download_and_preprocess(
             cval=dtrdict['cval']
         )
 
-        processed_lc = lk.LightCurve(time, flat_flux)
-        trend_lc = lk.LightCurve(time, trend_flux)
+        processed_lc = {'time':time, "flux":flat_flux}
+        trend_lc = {'time':time, 'flux':trend_flux}
 
         lc_list.append(processed_lc)
         trend_list.append(trend_lc)
 
+    raw_list = new_raw_list 
     # return processed_list, trends_list, raw_list 
 
     return lc_list, trend_list, raw_list  
@@ -115,7 +120,7 @@ def plot_lightcurve(
     import numpy as np
     import matplotlib.pyplot as plt
 
-    plt.style.use('/.other/aesthetics/science.mplstyle')
+    #plt.style.use('/.other/aesthetics/science.mplstyle')
 
     # how many sectors of 2-minute cadence TESS data (processed by the Ames
     # group) are available for this object?
@@ -124,18 +129,18 @@ def plot_lightcurve(
 
     fig, axs = plt.subplots(nrows=2*N_sectors, ncols=1, figsize=(12,4*N_sectors))
 
-    for ix in len(lc_list):
+    for ix in range(N_sectors):
 
         lc = lc_list[ix]
         trend_lc = trend_list[ix]
         raw_lc = raw_list[ix]
 
         # top axis: the data and model
-        axs[2*ix].scatter(raw_lc.time, raw_lc.flux, s=1, c='black', zorder=2)
-        axs[2*ix].plot(trend_lc.time, trend_lc.flux, lw=1, c='red',alpha=0.6, zorder=3)
+        axs[2*ix].scatter(raw_lc['time'], raw_lc['flux'], s=1, c='black', zorder=2)
+        axs[2*ix].plot(trend_lc['time'], trend_lc['flux'], lw=1, c='red',alpha=0.6, zorder=3)
 
         # bottom axis: the residual
-        axs[2*ix+1].scatter(lc.time, lc.flux, s=1, c='black', zorder=2)
+        axs[2*ix+1].scatter(lc['time'], lc['flux'], s=1, c='black', zorder=2)
 
     if outdir=='show': 
         plt.show()
