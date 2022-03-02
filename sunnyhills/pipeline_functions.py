@@ -26,6 +26,7 @@ def download_and_preprocess(
     import numpy as np 
     import lightkurve as lk 
     from wotan import flatten, slide_clip
+    from astropy.stats import sigma_clip
 
     # get the light curve
     lcc = lk.search_lightcurve(ticstr).download_all()
@@ -84,7 +85,14 @@ def download_and_preprocess(
             cval=dtrdict['cval']
         )
 
-        processed_lc = {'time':time, "flux":flat_flux}
+        _, *bounds = sigma_clip(flat_flux, sigma_lower=10, sigma_upper=1, maxiters=1, masked=False, return_bounds=True) # okay flex LOL
+        
+        flat_mask = np.logical_and(flat_flux<bounds[1], flat_flux>bounds[0])
+
+        flat_time = time[flat_mask]
+        flat_flux = flat_flux[flat_mask]
+
+        processed_lc = {'time':flat_time, "flux":flat_flux}
         trend_lc = {'time':time, 'flux':trend_flux}
 
         lc_list.append(processed_lc)
