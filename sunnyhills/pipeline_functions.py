@@ -41,7 +41,7 @@ def download(
         import shelve
         with shelve.open(log_file, "c") as shelf:
             log_dict = {'sectors', len(raw_list)}
-            dict_name = ticstr.replace(' ','')+':download'
+            dict_name = 'download:'+ticstr.replace(' ','')
             shelf[dict_name] = log_dict
         
     return raw_list
