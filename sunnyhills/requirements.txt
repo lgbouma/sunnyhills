@@ -1,0 +1,8 @@
+numpy 
+pandas 
+astropy
+lightkurve
+matplotlib 
+astropy 
+transitleastsquares
+wotan
