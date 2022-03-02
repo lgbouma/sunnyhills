@@ -140,5 +140,8 @@ def plot_lightcurve(
     if outdir=='show': 
         plt.show()
     
-    elif outdir
+    elif outdir!='none': 
+        plt.savefig(outdir+'/'+ticstr+'.png', bbox_inches='tight')
 
+    plt.clf()
+    #plt.close()
