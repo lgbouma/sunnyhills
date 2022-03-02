@@ -3,7 +3,8 @@
 
 def download(
     ticstr: str, 
-    outdir: str = 'none'): 
+    outdir: str = 'none', 
+    logfile: str = 'none'): 
     ''' 
     Args:
         outdir: directory where lightcurves will be saved. If not set, data will not be saved.  --> FIX!
@@ -35,6 +36,14 @@ def download(
 
     raw_list = [_l for _l in raw_list if _l.meta['FLUX_ORIGIN']=='pdcsap_flux']
 
+       
+    if logfile != 'none': 
+        import shelve
+        with shelve.open(log_file, "c") as shelf:
+            log_dict = {'sectors', len(raw_list)}
+            dict_name = ticstr.replace(' ','')+':download'
+            shelf[dict_name] = log_dict
+        
     return raw_list
 
 def preprocess(
