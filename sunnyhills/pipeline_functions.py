@@ -80,8 +80,8 @@ def download_and_preprocess(
             cval=dtrdict['cval']
         )
 
-        processed_lc = lk.lightcurve(time, flat_flux)
-        trend_lc = lk.lightkurve(time, trend_flux)
+        processed_lc = lk.LightCurve(time, flat_flux)
+        trend_lc = lk.LightCurve(time, trend_flux)
 
         lc_list.append(processed_lc)
         trend_list.append(trend_lc)
