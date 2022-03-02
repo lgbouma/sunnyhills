@@ -137,7 +137,30 @@ def preprocess(
 
     return lc_list, trend_list, raw_list  
 
-#download_and_preprocess('TIC 441420236')
+def download_and_preprocess(
+    ticstr: str = '',
+    outdir: str = "none", 
+    dtrdict: dict = {'method':'biweight',
+                     'window_length':0.5,
+                     'cval':5.0,
+                     "break_tolerance":1.0}, 
+    sigma_bounds: list = [10, 2]
+    ): 
+    
+    '''
+    Args: 
+        ticstr: 
+        outdir: dir to save light curve to. default is none
+        dtrdict: detrending dictionary 
+        sigma_bounds: bounds for sigma clipping 
+        
+    Returns: 
+        lc_list: list of light curve ojects that have met all criteria, been removed of outliers, normalized, and flattened. 
+        trend_list: list of light curve objects with x = time, y = trend
+        raw_list: list of the raw light curve objects 
+    '''
+
+
 
 def mask_transit(
     lc_dict : dict, 
