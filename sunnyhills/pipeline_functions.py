@@ -1,8 +1,45 @@
 # cSpell:ignore lightkurve, biweight, cval, dtrdict, detrended
 # cSpell: disable
 
-def download_and_preprocess(
-    ticstr: str,
+def download(
+    ticstr: str, 
+    outdir: str = 'none'): 
+    ''' 
+    Args:
+        outdir: directory where lightcurves will be saved. If not set, data will not be saved.  --> FIX!
+        ticstr: e.g., 'TIC 441420236'.  
+    Returns: 
+        raw_list: list of light curve ojects that mean criteria but have not been processed (i.e. not detrended, normalized, or sigma-clipped) 
+    '''
+    import numpy as np 
+    import lightkurve as lk 
+
+    # get the light curve
+    lcc = lk.search_lightcurve(ticstr).download_all()
+
+    # select only the two-minute cadence SPOC-reduced data; convert to a list.
+    # note that this conversion approach works for any LightCurveCollection
+    # returned by lightkurve -- no need to hand-pick the right ones.  the exact
+    # condition below says "if the interval is between 119 and 121 seconds,
+    # take it".
+    raw_list = [_l for _l in lcc
+            if
+            _l.meta['ORIGIN']=='NASA/Ames'
+            and
+            np.isclose(
+                120,
+                np.nanmedian(np.diff(_l.remove_outliers().time.value))*24*60*60,
+                atol=1
+            )
+    ]
+
+    raw_list = [_l for _l in raw_list if _l.meta['FLUX_ORIGIN']=='pdcsap_flux']
+
+    return raw_list
+
+def preprocess(
+    raw_list: list,
+    ticstr: str = '',
     outdir: str = "none", 
     dtrdict: dict = {'method':'biweight',
                      'window_length':0.5,
@@ -12,6 +49,7 @@ def download_and_preprocess(
     ):
     """
     Args:
+        raw_list: raw list of light curves; see download() 
         outdir: directory where lightcurves will be saved. If not set, data will not be saved.  --> FIX!
         ticstr: e.g., 'TIC 441420236'.  
         dtrdict: dictionary with keys "window_length", "method", "cval",
@@ -29,27 +67,6 @@ def download_and_preprocess(
     import lightkurve as lk 
     from wotan import flatten, slide_clip
     from astropy.stats import sigma_clip
-
-    # get the light curve
-    lcc = lk.search_lightcurve(ticstr).download_all()
-
-    # select only the two-minute cadence SPOC-reduced data; convert to a list.
-    # note that this conversion approach works for any LightCurveCollection
-    # returned by lightkurve -- no need to hand-pick the right ones.  the exact
-    # condition below says "if the interval is between 119 and 121 seconds,
-    # take it".
-    raw_list = [_l for _l in lcc
-         if
-         _l.meta['ORIGIN']=='NASA/Ames'
-         and
-         np.isclose(
-             120,
-             np.nanmedian(np.diff(_l.remove_outliers().time.value))*24*60*60,
-             atol=1
-         )
-    ]
-
-    raw_list = [_l for _l in raw_list if _l.meta['FLUX_ORIGIN']=='pdcsap_flux']
     
     lc_list = [] # for detrended and "cleaned" light curves
     trend_list = []
@@ -155,10 +172,10 @@ def mask_transit(
     return lc_dict, trend_dict
 
 def plot_lightcurve(
-    ticstr:str,
     lc_list,
     trend_list,
     raw_list, 
+    ticstr:str = '',
     outdir:str = 'none' 
 ): 
     """
