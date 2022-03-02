@@ -7,7 +7,8 @@ def download_and_preprocess(
     dtrdict: dict = {'method':'biweight',
                      'window_length':0.5,
                      'cval':5.0,
-                     "break_tolerance":1.0}
+                     "break_tolerance":1.0}, 
+    sigma_bounds: list = [10, 2]
     ):
     """
     Args:
@@ -17,6 +18,7 @@ def download_and_preprocess(
                  "break_tolerance", or anything else needed by wotan's `flatten`
                  call.  These are documented at
                  https://wotan.readthedocs.io/en/latest/Usage.html 
+        sigma_bounds: list of the lower and upper sigma bounds to use for post detrend sigma-clipping 
     Returns: 
         lc_list: list of light curve ojects that have met all criteria, been removed of outliers, normalized, and flattened. 
         trend_list: list of light curve objects with x = time, y = trend
@@ -85,8 +87,14 @@ def download_and_preprocess(
             cval=dtrdict['cval']
         )
 
-        _, *bounds = sigma_clip(flat_flux, sigma_lower=10, sigma_upper=1, maxiters=1, masked=False, return_bounds=True) # okay flex LOL
-        
+        flat_mean, flat_sigma = (np.nanmean(flat_flux), np.nanstd(flat_flux))
+
+        #_, *bounds = sigma_clip(flat_flux, sigma_lower=10, sigma_upper=1, maxiters=1, masked=False, return_bounds=True) # okay flex LOL
+
+        bounds = [flat_mean-sigma_bounds[0]*flat_sigma, flat_mean+sigma_bounds[1]*flat_sigma]
+
+        print(bounds)
+
         flat_mask = np.logical_and(flat_flux<bounds[1], flat_flux>bounds[0])
 
         flat_time = time[flat_mask]
@@ -104,6 +112,47 @@ def download_and_preprocess(
     return lc_list, trend_list, raw_list  
 
 #download_and_preprocess('TIC 441420236')
+
+def mask_transit(
+    lc_dict : dict, 
+    transit_dict : dict = {'period':1, 
+                           'duration':1, 
+                           'T0':1}, 
+): 
+    '''
+    Args
+        lc_dict: the light curve dictionary (time, flux) to mask 
+        transit_dict: dictionary of the values needed to mask out the transit 
+    Returns: 
+        lc_dict: the light curve dictionary (time, flux) with the given transit masked out 
+        trend_dict: the transit dict (time, flux) with the trend as flux 
+    '''
+
+    from wotan import transit_mask, flatten
+
+    time = lc_dict['time']
+    flux = lc_dict['flux']
+    
+    mask = transit_mask(
+        time=time,
+        period=transit_dict['period'],
+        duration=transit_dict['duration'],
+        T0=transit_dict['T0'])
+    
+    flatten_lc, trend_lc = flatten(
+        time,
+        flux,
+        method='cosine',
+        window_length=0.5,
+        return_trend=True,
+        robust=True,
+        mask=mask
+        )
+
+    lc_dict = {'time':time, 'flux':flatten_lc}
+    trend_dict = {'time':time, 'flux':trend_lc}
+
+    return lc_dict, trend_dict
 
 def plot_lightcurve(
     ticstr:str,
@@ -135,7 +184,9 @@ def plot_lightcurve(
 
     N_sectors = len(lc_list)
 
-    fig, axs = plt.subplots(nrows=2*N_sectors, ncols=1, figsize=(12,4*N_sectors))
+    fig, axs = plt.subplots(nrows=2*N_sectors, ncols=1, figsize=(12,4*N_sectors), sharey=True)
+
+    fig.tight_layout()
 
     for ix in range(N_sectors):
 
@@ -158,3 +209,24 @@ def plot_lightcurve(
 
     plt.clf()
     #plt.close()
+
+def bls_plot(lc_dict): 
+    '''
+    Args
+        lc_list: 
+    Returns: 
+    '''
+
+    import matplotlib.pyplot as plt
+    from astropy.timeseries import BoxLeastSquares
+    import numpy as np
+
+    time = lc_dict['time']
+    flux = lc_dict['flux']
+
+    t = np.random.uniform(5,7, 1000)
+    model = BoxLeastSquares(t, flux)
+    periodogram = model.autopower(0.2, objective='snr')
+
+    periodogram.plot()
+    

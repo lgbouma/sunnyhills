@@ -7,3 +7,4 @@ wotan
 transitleastsquares
 seaborn
 mpl-scatter-density
+SciencePlots 
