@@ -1,0 +1,9 @@
+numpy 
+pandas 
+matplotlib
+astropy 
+lightkurve
+wotan 
+transitleastsquares
+seaborn
+mpl-scatter-density
