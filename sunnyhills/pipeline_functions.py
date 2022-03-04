@@ -5,15 +5,20 @@ def download(
     ticstr: str, 
     outdir: str = 'none', 
     logfile: str = 'none'): 
+    
     ''' 
     Args:
-        outdir: directory where lightcurves will be saved. If not set, data will not be saved.  --> FIX!
-        ticstr: e.g., 'TIC 441420236'.  
+        outdir: directory where lightcurves will be saved. If not set, data will not be saved. 
+        ticstr: e.g., 'TIC 441420236'
+        logfile: file to append log dictionary to 
     Returns: 
         raw_list: list of light curve ojects that mean criteria but have not been processed (i.e. not detrended, normalized, or sigma-clipped) 
     '''
+
     import numpy as np 
     import lightkurve as lk 
+    import shelve 
+    import pickle 
 
     # get the light curve
     lcc = lk.search_lightcurve(ticstr).download_all()
@@ -35,15 +40,47 @@ def download(
     ]
 
     raw_list = [_l for _l in raw_list if _l.meta['FLUX_ORIGIN']=='pdcsap_flux']
+    
+    new_raw_list = []
 
-       
+    for lc in raw_list: 
+        time = lc.time.value
+        flux = lc.pdcsap_flux.value
+        qual = lc.quality.value
+
+        # remove non-zero quality flags
+        sel = (qual == 0)
+
+        time = time[sel]
+        flux = flux[sel]
+
+        # normalize around 1
+        flux /= np.nanmedian(flux)
+
+        new_raw_list.append({'time':time, 'flux':flux})
+
+    raw_list = new_raw_list 
+
     if logfile != 'none': 
-        import shelve
-        with shelve.open(log_file, "c") as shelf:
-            log_dict = {'sectors', len(raw_list)}
-            dict_name = 'download:'+ticstr.replace(' ','')
-            shelf[dict_name] = log_dict
-        
+        with shelve.open(logfile, "c") as shelf:
+            
+            dict_name = 'general:'+ticstr.replace(' ','')
+
+            if dict_name in shelf: 
+                shelf_dict = shelf[dict_name]
+                if 'sectors' not in shelf_dict: 
+                    shelf_dict[dict_name]['sectors'] = len(raw_list)
+
+            else: 
+                log_dict = {'sectors', len(raw_list)}
+                shelf[dict_name] = log_dict
+
+    if outdir != 'none': 
+        joined = {'raw_list':raw_list}
+        outfile = outdir + '/' + ticstr.replace(' ', '_') + '_raw_lc.pickle'
+        with open(outfile, 'wb') as handle:
+            pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
     return raw_list
 
 def preprocess(
@@ -76,28 +113,15 @@ def preprocess(
     import lightkurve as lk 
     from wotan import flatten, slide_clip
     from astropy.stats import sigma_clip
+    import pickle
     
     lc_list = [] # for detrended and "cleaned" light curves
     trend_list = []
 
-    new_raw_list = []
-
     for lc in raw_list:
 
-        time = lc.time.value
-        flux = lc.pdcsap_flux.value
-        qual = lc.quality.value
-
-        # remove non-zero quality flags
-        sel = (qual == 0)
-
-        time = time[sel]
-        flux = flux[sel]
-
-        # normalize around 1
-        flux /= np.nanmedian(flux)
-
-        new_raw_list.append({'time':time, 'flux':flux})
+        time = lc['time']
+        flux = lc['flux']
 
         # remove outliers before local window detrending
         clipped_flux = slide_clip(time, flux, window_length=0.5, low=3,
@@ -117,9 +141,7 @@ def preprocess(
 
         #_, *bounds = sigma_clip(flat_flux, sigma_lower=10, sigma_upper=1, maxiters=1, masked=False, return_bounds=True) # okay flex LOL
 
-        bounds = [flat_mean-sigma_bounds[0]*flat_sigma, flat_mean+sigma_bounds[1]*flat_sigma]
-
-        print(bounds)
+        bounds = [flat_mean-sigma_bounds[0]*flat_sigma, flat_mean+sigma_bounds[1]*flat_sigma] # save these bounds to log file? 
 
         flat_mask = np.logical_and(flat_flux<bounds[1], flat_flux>bounds[0])
 
@@ -132,14 +154,18 @@ def preprocess(
         lc_list.append(processed_lc)
         trend_list.append(trend_lc)
 
-    raw_list = new_raw_list 
-    # return processed_list, trends_list, raw_list 
+    if outdir != 'none': 
+        out_file = outdir+'/'+ticstr.replace(' ','_')+'_lc.pickle'
+        joined = {'lc_list':lc_list, 'trend_list':trend_list, 'raw_list':raw_list}
+        with open(out_file, 'wb') as handle:
+            pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     return lc_list, trend_list, raw_list  
 
 def download_and_preprocess(
     ticstr: str = '',
     outdir: str = "none", 
+    logfile: str = 'none', 
     dtrdict: dict = {'method':'biweight',
                      'window_length':0.5,
                      'cval':5.0,
@@ -160,122 +186,11 @@ def download_and_preprocess(
         raw_list: list of the raw light curve objects 
     '''
 
+    from sunnyhills.pipeline_functions import download, preprocess # lol troll
 
+    raw_list = download(ticstr=ticstr, logfile=logfile, outdir=outdir) 
 
-def mask_transit(
-    lc_dict : dict, 
-    transit_dict : dict = {'period':1, 
-                           'duration':1, 
-                           'T0':1}, 
-): 
-    '''
-    Args
-        lc_dict: the light curve dictionary (time, flux) to mask 
-        transit_dict: dictionary of the values needed to mask out the transit 
-    Returns: 
-        lc_dict: the light curve dictionary (time, flux) with the given transit masked out 
-        trend_dict: the transit dict (time, flux) with the trend as flux 
-    '''
+    lc_list, trend_list, raw_list = preprocess(raw_list=raw_list, ticstr=ticstr, outdir=outdir, dtrdict=dtrdict, sigma_bounds=sigma_bounds)
 
-    from wotan import transit_mask, flatten
+    return lc_list, trend_list, raw_list 
 
-    time = lc_dict['time']
-    flux = lc_dict['flux']
-    
-    mask = transit_mask(
-        time=time,
-        period=transit_dict['period'],
-        duration=transit_dict['duration'],
-        T0=transit_dict['T0'])
-    
-    flatten_lc, trend_lc = flatten(
-        time,
-        flux,
-        method='cosine',
-        window_length=0.5,
-        return_trend=True,
-        robust=True,
-        mask=mask
-        )
-
-    lc_dict = {'time':time, 'flux':flatten_lc}
-    trend_dict = {'time':time, 'flux':trend_lc}
-
-    return lc_dict, trend_dict
-
-def plot_lightcurve(
-    lc_list,
-    trend_list,
-    raw_list, 
-    ticstr:str = '',
-    outdir:str = 'none' 
-): 
-    """
-    Args:
-        ticstr: ticid, e.g. TIC 441420236
-        lc_list: list of light curve objects from NASA Ames 
-        lc_list: list of light curve ojects that have met all criteria, been removed of outliers, normalized, and flattened. 
-        trend_list: list of light curve objects with x = time, y = trend
-        raw_list: list of the raw light curve objects 
-        outdir: directory into which plots should be saved. None are saved if set to default
-
-    Returns: 
-
-    """
-
-    import numpy as np
-    import matplotlib.pyplot as plt
-
-    #plt.style.use('/.other/aesthetics/science.mplstyle')
-
-    # how many sectors of 2-minute cadence TESS data (processed by the Ames
-    # group) are available for this object?
-
-    N_sectors = len(lc_list)
-
-    fig, axs = plt.subplots(nrows=2*N_sectors, ncols=1, figsize=(12,4*N_sectors), sharey=True)
-
-    fig.tight_layout()
-
-    for ix in range(N_sectors):
-
-        lc = lc_list[ix]
-        trend_lc = trend_list[ix]
-        raw_lc = raw_list[ix]
-
-        # top axis: the data and model
-        axs[2*ix].scatter(raw_lc['time'], raw_lc['flux'], s=1, c='black', zorder=2)
-        axs[2*ix].plot(trend_lc['time'], trend_lc['flux'], lw=1, c='red',alpha=0.6, zorder=3)
-
-        # bottom axis: the residual
-        axs[2*ix+1].scatter(lc['time'], lc['flux'], s=1, c='black', zorder=2)
-
-    if outdir=='show': 
-        plt.show()
-    
-    elif outdir!='none': 
-        plt.savefig(outdir+'/'+ticstr+'.png', bbox_inches='tight')
-
-    plt.clf()
-    #plt.close()
-
-def bls_plot(lc_dict): 
-    '''
-    Args
-        lc_list: 
-    Returns: 
-    '''
-
-    import matplotlib.pyplot as plt
-    from astropy.timeseries import BoxLeastSquares
-    import numpy as np
-
-    time = lc_dict['time']
-    flux = lc_dict['flux']
-
-    t = np.random.uniform(5,7, 1000)
-    model = BoxLeastSquares(t, flux)
-    periodogram = model.autopower(0.2, objective='snr')
-
-    periodogram.plot()
-    

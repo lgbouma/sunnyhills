@@ -1,6 +1,14 @@
-from sunnyhills.pipeline_functions import download_and_preprocess, plot_lightcurve
+import pandas as pd
 
-lc_list, trend_list, raw_list = download_and_preprocess('TIC 165818534')
-plot_lightcurve('TIC 261136679', lc_list, trend_list, raw_list, outdir='show')
+lc_one = pd.DataFrame.from_dict({'time':[1,2,3,4], 'flux':[1,2,3,4]}) 
 
-# 441420236 is au mic ... TIC 261136679 is Pi Mensae and has period of ~6.27 days
+'''
+with open('all_dfs.csv','w') as f:
+    for df in [lc_one, lc_one]:
+        df.to_csv(f, index=False)
+        f.write("\n")
+
+'''
+
+dfs = pd.read_csv('all_dfs.csv')
+print(dfs)
