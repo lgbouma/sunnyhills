@@ -4,21 +4,22 @@
 def download(
     ticstr: str, 
     outdir: str = 'none', 
-    logfile: str = 'none'): 
+    logdir: str = 'none'): 
     
     ''' 
     Args:
         outdir: directory where lightcurves will be saved. If not set, data will not be saved. 
         ticstr: e.g., 'TIC 441420236'
-        logfile: file to append log dictionary to 
+        logdir: directory for log file
     Returns: 
         raw_list: list of light curve ojects that mean criteria but have not been processed (i.e. not detrended, normalized, or sigma-clipped) 
     '''
 
     import numpy as np 
     import lightkurve as lk 
-    import shelve 
+    import os 
     import pickle 
+    from sunnyhills.pipeline_functions import convert_to_absolute_path
 
     # get the light curve
     lcc = lk.search_lightcurve(ticstr).download_all()
@@ -60,24 +61,28 @@ def download(
         new_raw_list.append({'time':time, 'flux':flux})
 
     raw_list = new_raw_list 
+    
+    if logdir != 'none': 
+        logfile = logdir + '/' + ticstr.replace(" ",'_')+'_log.pickle'
 
-    if logfile != 'none': 
-        with shelve.open(logfile, "c") as shelf:
-            
-            dict_name = 'general:'+ticstr.replace(' ','')
+        logfile = convert_to_absolute_path(logfile)
+        if os.path.exists(logfile): 
+            with open(logfile, 'rb') as f: 
+                content = pickle.load(f)
+                content['sectors']=len(raw_list)
 
-            if dict_name in shelf: 
-                shelf_dict = shelf[dict_name]
-                if 'sectors' not in shelf_dict: 
-                    shelf_dict[dict_name]['sectors'] = len(raw_list)
+        else: 
+            content = {'sectors':raw_list}
 
-            else: 
-                log_dict = {'sectors', len(raw_list)}
-                shelf[dict_name] = log_dict
+        with open(logfile, 'wb') as f: 
+                pickle.dump(content, f, protocol=pickle.HIGHEST_PROTOCOL)
 
     if outdir != 'none': 
         joined = {'raw_list':raw_list}
         outfile = outdir + '/' + ticstr.replace(' ', '_') + '_raw_lc.pickle'
+        
+        outfile = convert_to_absolute_path(outfile)
+
         with open(outfile, 'wb') as handle:
             pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
@@ -114,6 +119,7 @@ def preprocess(
     from wotan import flatten, slide_clip
     from astropy.stats import sigma_clip
     import pickle
+    from sunnyhills.pipeline_functions import convert_to_absolute_path
     
     lc_list = [] # for detrended and "cleaned" light curves
     trend_list = []
@@ -155,9 +161,10 @@ def preprocess(
         trend_list.append(trend_lc)
 
     if outdir != 'none': 
-        out_file = outdir+'/'+ticstr.replace(' ','_')+'_lc.pickle'
+        outfile = outdir+'/'+ticstr.replace(' ','_')+'_lc.pickle'
         joined = {'lc_list':lc_list, 'trend_list':trend_list, 'raw_list':raw_list}
-        with open(out_file, 'wb') as handle:
+        outfile = convert_to_absolute_path(outfile)
+        with open(outfile, 'wb') as handle:
             pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     return lc_list, trend_list, raw_list  
@@ -165,7 +172,7 @@ def preprocess(
 def download_and_preprocess(
     ticstr: str = '',
     outdir: str = "none", 
-    logfile: str = 'none', 
+    logdir: str = 'none', 
     dtrdict: dict = {'method':'biweight',
                      'window_length':0.5,
                      'cval':5.0,
@@ -177,6 +184,7 @@ def download_and_preprocess(
     Args: 
         ticstr: 
         outdir: dir to save light curve to. default is none
+        logdir: dir to save log file to. default is none
         dtrdict: detrending dictionary 
         sigma_bounds: bounds for sigma clipping 
         
@@ -188,9 +196,28 @@ def download_and_preprocess(
 
     from sunnyhills.pipeline_functions import download, preprocess # lol troll
 
-    raw_list = download(ticstr=ticstr, logfile=logfile, outdir=outdir) 
+    raw_list = download(ticstr=ticstr, logdir=logdir, outdir=outdir) 
 
     lc_list, trend_list, raw_list = preprocess(raw_list=raw_list, ticstr=ticstr, outdir=outdir, dtrdict=dtrdict, sigma_bounds=sigma_bounds)
 
     return lc_list, trend_list, raw_list 
 
+def convert_to_absolute_path(rel_path): 
+    import os 
+    import platform 
+    full_path = os.path.abspath('')
+    rel_path = './personal_epochs/thaddaeus/march_2022/misc/log'
+    
+    sys = platform.system()
+
+    if sys=='Windows': 
+        rel_path = rel_path.replace('./', '\\')
+        rel_path = rel_path.replace('/', '\\')
+
+    else: 
+        rel_path = rel_path[1:]
+
+    break_index = full_path.index('sunnyhills')
+    abs_path = full_path[0:break_index+10] + rel_path
+
+    return abs_path 
