@@ -1,6 +1,8 @@
 # cSpell:ignore lightkurve, biweight, cval, dtrdict, detrended
 # cSpell: disable
 
+## DATA PROCESSING RELATED ##
+
 def download(
     ticstr: str, 
     outdir: str = 'none', 
@@ -54,6 +56,9 @@ def download(
 
         time = time[sel]
         flux = flux[sel]
+
+        not_nan_mask = ~np.isnan(flux)
+        time, flux = (time[not_nan_mask], flux[not_nan_mask])
 
         # normalize around 1
         flux /= np.nanmedian(flux)
@@ -221,3 +226,60 @@ def convert_to_absolute_path(rel_path):
     abs_path = full_path[0:break_index+10] + rel_path
 
     return abs_path 
+
+## PERIOD SEARCH ROUTINES ##
+def run_bls(lc_list, 
+            bls_params: dict = {'min_per':0.5, 'max_per':15, 
+                                'minimum_n_transit':2, 
+                                'freq_factor':1,
+                                'durations':[0.05, 0.06666666666666668, 
+                                             0.08333333333333334, 0.1,
+                                             0.11666666666666668, 
+                                             0.13333333333333336,
+                                             0.15000000000000002, 
+                                             0.16666666666666669, 
+                                             0.18333333333333335, 0.2], 
+                                'objective':'snr'}, 
+            compute_stats: bool = False): 
+
+    '''
+    args: 
+        lc_list: light curve list
+        bls_params: params for bls execution. see documentation
+        compute_stats: compute statistics on best period/duration combination? default False
+    returns: 
+        results: the BLS results array 
+        bls_model: the BLS model  
+        in_transit_mask: mask for the in_transit points. to get not in transit, do ~in_transit_mask
+        stats: if compute_stats==True, then the stats on the best period/duration/t0 are returned
+    '''
+
+    from astropy.timeseries import BoxLeastSquares
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    time = lc_list[0]['time']
+    flux = lc_list[0]['flux']
+
+    durations = np.array(bls_params['durations'])
+
+    bls_model = BoxLeastSquares(t=time, y=flux)
+
+    results = bls_model.autopower(durations, frequency_factor=bls_params['freq_factor'], 
+                            minimum_period=bls_params['min_per'], 
+                            maximum_period=bls_params['max_per'],
+                            objective=bls_params['objective'])
+
+    index = np.argmax(results.power)
+    period = results.period[index]
+    t0 = results.transit_time[index]
+    duration = results.duration[index]
+    
+    in_transit = bls_model.transit_mask(time, period, 2*duration, t0)
+
+    if compute_stats: 
+        stats = bls_model.compute_stats(period, duration, t0)
+        return results, bls_model, in_transit, stats
+
+    else: 
+        return results, bls_model, in_transit 
