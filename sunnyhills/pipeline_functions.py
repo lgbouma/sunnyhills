@@ -228,6 +228,9 @@ def convert_to_absolute_path(rel_path):
     return abs_path 
 
 ## PERIOD SEARCH ROUTINES ##
+
+## BLS ##
+
 def run_bls(lc_list, 
             bls_params: dict = {'min_per':0.5, 'max_per':15, 
                                 'minimum_n_transit':2, 
@@ -240,7 +243,7 @@ def run_bls(lc_list,
                                              0.16666666666666669, 
                                              0.18333333333333335, 0.2], 
                                 'objective':'snr'}, 
-            compute_stats: bool = False): 
+            compute_stats: bool = True): 
 
     '''
     args: 
@@ -283,3 +286,92 @@ def run_bls(lc_list,
 
     else: 
         return results, bls_model, in_transit 
+
+def iterative_bls_runner(lc_list, 
+                     iterations: int=1, 
+                     bls_params: dict = {'min_per':0.5, 'max_per':15, 
+                                'minimum_n_transit':2, 
+                                'freq_factor':1,
+                                'durations':[0.05, 0.06666666666666668, 
+                                             0.08333333333333334, 0.1,
+                                             0.11666666666666668, 
+                                             0.13333333333333336,
+                                             0.15000000000000002, 
+                                             0.16666666666666669, 
+                                             0.18333333333333335, 0.2], 
+                                'objective':'snr'}, 
+                    compute_stats: bool = True): 
+
+    '''
+    Args:
+        lc_list: lc_list, per usual 
+        iterations: number of times to run the search, can be between 1 and 10 
+        bls_params: per usual, dictionary of BLS parameters
+        compute_stats: will be set to true by default? 
+
+    Returns: 
+        results_dict: dictionary of results from each iteration 
+        models_dict: dicitonary of bls models from each iteration
+        in_transits_dict: dictionary of in_transit arrays from each iteration
+        stats_dict: dictionary of stats from each iteration if compute_stats==True
+    '''
+
+    from astropy.timeseries import BoxLeastSquares
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    time = lc_list[0]['time']
+    flux = lc_list[0]['flux']
+
+    durations = np.array(bls_params['durations'])
+
+    if iterations < 1:
+        iterations = 1
+    elif iterations > 10: 
+        iterations = 10 
+
+    results_dict = {} 
+    models_dict = {} 
+    in_transits_dict = {} 
+    stats_dict = {} 
+
+    iteration_names = ['first', 'second', 'third', 'fourth',
+                       'fifth', 'sixth', 'seventh', 'eigth',
+                       'ninth', 'tenth']
+
+    for index in range(iterations):
+        iter_name = iteration_names[index] 
+        bls_model = BoxLeastSquares(t=time, y=flux)
+
+        results = bls_model.autopower(durations, frequency_factor=bls_params['freq_factor'], 
+                                minimum_period=bls_params['min_per'], 
+                                maximum_period=bls_params['max_per'],
+                                objective=bls_params['objective'])
+        
+        results_dict[iter_name] = results
+
+        index = np.argmax(results.power)
+        period = results.period[index]
+        t0 = results.transit_time[index]
+        duration = results.duration[index]
+        
+        in_transit = bls_model.transit_mask(time, period, 2*duration, t0)
+
+        in_transits_dict[iter_name] = in_transit
+
+        models_dict[iter_name] = bls_model
+
+        if compute_stats: 
+            stats = bls.compute_stats(period, duration, t0)
+            stats_dict[iter_name] = stats
+
+        time = time[~in_transit]
+        flux = flux[~in_transit]
+
+    if compute_stats: 
+        stats = bls.compute_stats(period, duration, t0)
+        stats_dict[iter_name] = stats
+        return results_dict, models_dict, in_transits_dict, stats_dict
+
+    else: 
+        return results_dict, models_dict, in_transits_dict
