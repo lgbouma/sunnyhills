@@ -87,6 +87,7 @@ def download(
     if not data_found: 
         raw_list = []
 
+    '''
     if logdir != 'none': 
             logfile = logdir + '/' + ticstr.replace(" ",'_')+'_log.pickle'
 
@@ -101,7 +102,7 @@ def download(
 
             with open(logfile, 'wb') as f: 
                     pickle.dump(content, f, protocol=pickle.HIGHEST_PROTOCOL)
-
+    '''
     return raw_list, data_found
 
 def preprocess(
@@ -176,14 +177,49 @@ def preprocess(
         lc_list.append(processed_lc)
         trend_list.append(trend_lc)
 
+    # do stitching!  ---> make this more efficient! 
+
+    lightcurves = []
+    for i in range(len(lc_list)): 
+        lc_obj = lk.LightCurve(time=lc_list[i]['time'], flux=lc_list[i]['flux'])
+
+    stiched_lc = lk.stitch(lightcurves)
+
+    stitched_time = stitched_lc.time.value
+    stitched_flux = stitched_lc.flux.value
+
+    stitched_lc = {'time':stitched_time, 'flux':stitched_flux}
+
+    trends = []
+    for i in range(len(lc_list)): 
+        lc_obj = lk.LightCurve(time=trend_list[i]['time'], flux=trend_list[i]['flux'])
+
+    stiched_trend = lk.stitch(trends)
+
+    stitched_time = stitched_trend.time.value
+    stitched_flux = stitched_trend.flux.value
+
+    stitched_trend = {'time':stitched_time, 'flux':stitched_flux}
+
+    raw_objs = []
+    for i in range(len(lc_list)): 
+        lc_obj = lk.LightCurve(time=raw_list[i]['time'], flux=raw_list[i]['flux'])
+
+    stiched_raw = lk.stitch(raw_objs)
+
+    stitched_time = stitched_raw.time.value
+    stitched_flux = stitched_raw.flux.value
+
+    stitched_raw = {'time':stitched_time, 'flux':stitched_flux}
+
     if outdir != 'none': 
         outfile = outdir+'/'+ticstr.replace(' ','_')+'_lc.pickle'
-        joined = {'lc_list':lc_list, 'trend_list':trend_list, 'raw_list':raw_list}
+        joined = {'stitched_lc':lc_list, 'stitched_trend':trend_list, 'stitched_raw':raw_list}
         outfile = convert_to_absolute_path(outfile)
         with open(outfile, 'wb') as handle:
             pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    return lc_list, trend_list, raw_list  
+    return stitched_lc, stitched_trend, stitched_raw   
 
 def download_and_preprocess(
     ticstr: str = '',
@@ -208,17 +244,23 @@ def download_and_preprocess(
         lc_list: list of light curve ojects that have met all criteria, been removed of outliers, normalized, and flattened. 
         trend_list: list of light curve objects with x = time, y = trend
         raw_list: list of the raw light curve objects 
+        data_found: if data was not found during download, returns empty lists for the above three and false for this
     '''
 
     from sunnyhills.pipeline_functions import download, preprocess # lol troll
+    import numpy as np
 
-    raw_list = download(ticstr=ticstr, logdir=logdir, outdir=outdir) 
+    raw_list, data_found = download(ticstr=ticstr, logdir=logdir, outdir=outdir) 
 
-    lc_list, trend_list, raw_list = preprocess(raw_list=raw_list, ticstr=ticstr, outdir=outdir, dtrdict=dtrdict, sigma_bounds=sigma_bounds)
+    if data_found: 
+        stitched_lc, stitched_trend, stitched_raw = preprocess(raw_list=raw_list, ticstr=ticstr, outdir=outdir, dtrdict=dtrdict, sigma_bounds=sigma_bounds)
 
-    return lc_list, trend_list, raw_list 
+    else: 
+        stitched_lc, stitched_trend, stitched_raw = (np.array([]), np.array([]), np.array([]))
+    
+    return stitched_lc, stitched_trend, stitched_raw, data_found
 
-def convert_to_absolute_path(rel_path): 
+def convert_to_absolute_path(rel_path): # --> remove this! (?) 
     import os 
     import platform 
     full_path = os.path.abspath('')
@@ -242,7 +284,7 @@ def convert_to_absolute_path(rel_path):
 
 ## BLS ##
 
-def run_bls(lc_list, 
+def run_bls(stitched_lc, 
             bls_params: dict = {'min_per':0.5, 'max_per':15, 
                                 'minimum_n_transit':2, 
                                 'freq_factor':1,
@@ -258,7 +300,7 @@ def run_bls(lc_list,
 
     '''
     args: 
-        lc_list: light curve list
+        stitched_lc: list of stitched light curve arrays [time, flux]
         bls_params: params for bls execution. see documentation
         compute_stats: compute statistics on best period/duration combination? default False
     returns: 
@@ -272,8 +314,8 @@ def run_bls(lc_list,
     import numpy as np
     import matplotlib.pyplot as plt
 
-    time = lc_list[0]['time']
-    flux = lc_list[0]['flux']
+    time = stitched_lc['time']
+    flux = stitched_lc['flux']
 
     durations = np.array(bls_params['durations'])
 
@@ -298,7 +340,7 @@ def run_bls(lc_list,
     else: 
         return results, bls_model, in_transit 
 
-def iterative_bls_runner(lc_list, 
+def iterative_bls_runner(stitched_lc, 
                      iterations: int=1, 
                      bls_params: dict = {'min_per':0.5, 'max_per':15, 
                                 'minimum_n_transit':2, 
@@ -315,7 +357,7 @@ def iterative_bls_runner(lc_list,
 
     '''
     Args:
-        lc_list: lc_list, per usual 
+        stitched_lc: stitched_lc, per usual  
         iterations: number of times to run the search, can be between 1 and 10 
         bls_params: per usual, dictionary of BLS parameters
         compute_stats: will be set to true by default? 
@@ -331,8 +373,8 @@ def iterative_bls_runner(lc_list,
     import numpy as np
     import matplotlib.pyplot as plt
 
-    time = lc_list[0]['time']
-    flux = lc_list[0]['flux']
+    time = stitched_lc['time']
+    flux = stitched_lc['flux']
 
     durations = np.array(bls_params['durations'])
 
@@ -373,15 +415,13 @@ def iterative_bls_runner(lc_list,
         models_dict[iter_name] = bls_model
 
         if compute_stats: 
-            stats = bls.compute_stats(period, duration, t0)
+            stats = bls_model.compute_stats(period, duration, t0)
             stats_dict[iter_name] = stats
 
         time = time[~in_transit]
         flux = flux[~in_transit]
 
     if compute_stats: 
-        stats = bls.compute_stats(period, duration, t0)
-        stats_dict[iter_name] = stats
         return results_dict, models_dict, in_transits_dict, stats_dict
 
     else: 
