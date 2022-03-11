@@ -15,6 +15,7 @@ def download(
         logdir: directory for log file
     Returns: 
         raw_list: list of light curve ojects that mean criteria but have not been processed (i.e. not detrended, normalized, or sigma-clipped) 
+        data_found: boolean variable telling you if data were found or not 
     '''
 
     import numpy as np 
@@ -24,74 +25,84 @@ def download(
     from sunnyhills.pipeline_functions import convert_to_absolute_path
 
     # get the light curve
-    lcc = lk.search_lightcurve(ticstr).download_all()
+    data_found = False
+    
+    lcset = lk.search_lightcurve(ticstr) # otherwise it'll fail for TIC IDs without 120 second cadence data.
+    if len(lcset) > 0:
+        lcc = lcset[(lcset.author=='SPOC') & (lcset.exptime.value==120)].download_all()
+        data_found = True
 
     # select only the two-minute cadence SPOC-reduced data; convert to a list.
     # note that this conversion approach works for any LightCurveCollection
     # returned by lightkurve -- no need to hand-pick the right ones.  the exact
     # condition below says "if the interval is between 119 and 121 seconds,
     # take it".
-    raw_list = [_l for _l in lcc
-            if
-            _l.meta['ORIGIN']=='NASA/Ames'
-            and
-            np.isclose(
-                120,
-                np.nanmedian(np.diff(_l.remove_outliers().time.value))*24*60*60,
-                atol=1
-            )
-    ]
 
-    raw_list = [_l for _l in raw_list if _l.meta['FLUX_ORIGIN']=='pdcsap_flux']
-    
-    new_raw_list = []
+    if data_found: 
+        raw_list = [_l for _l in lcc
+                if
+                _l.meta['ORIGIN']=='NASA/Ames'
+                and
+                np.isclose(
+                    120,
+                    np.nanmedian(np.diff(_l.remove_outliers().time.value))*24*60*60,
+                    atol=1
+                )
+        ]
 
-    for lc in raw_list: 
-        time = lc.time.value
-        flux = lc.pdcsap_flux.value
-        qual = lc.quality.value
-
-        # remove non-zero quality flags
-        sel = (qual == 0)
-
-        time = time[sel]
-        flux = flux[sel]
-
-        not_nan_mask = ~np.isnan(flux)
-        time, flux = (time[not_nan_mask], flux[not_nan_mask])
-
-        # normalize around 1
-        flux /= np.nanmedian(flux)
-
-        new_raw_list.append({'time':time, 'flux':flux})
-
-    raw_list = new_raw_list 
-    
-    if logdir != 'none': 
-        logfile = logdir + '/' + ticstr.replace(" ",'_')+'_log.pickle'
-
-        logfile = convert_to_absolute_path(logfile)
-        if os.path.exists(logfile): 
-            with open(logfile, 'rb') as f: 
-                content = pickle.load(f)
-                content['sectors']=len(raw_list)
-
-        else: 
-            content = {'sectors':raw_list}
-
-        with open(logfile, 'wb') as f: 
-                pickle.dump(content, f, protocol=pickle.HIGHEST_PROTOCOL)
-
-    if outdir != 'none': 
-        joined = {'raw_list':raw_list}
-        outfile = outdir + '/' + ticstr.replace(' ', '_') + '_raw_lc.pickle'
+        raw_list = [_l for _l in raw_list if _l.meta['FLUX_ORIGIN']=='pdcsap_flux']
         
-        outfile = convert_to_absolute_path(outfile)
+        new_raw_list = []
 
-        with open(outfile, 'wb') as handle:
-            pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        for lc in raw_list: 
+            time = lc.time.value
+            flux = lc.pdcsap_flux.value
+            qual = lc.quality.value
 
-    return raw_list
+            # remove non-zero quality flags
+            sel = (qual == 0)
+
+            time = time[sel]
+            flux = flux[sel]
+
+            not_nan_mask = ~np.isnan(flux)
+            time, flux = (time[not_nan_mask], flux[not_nan_mask])
+
+            # normalize around 1
+            flux /= np.nanmedian(flux)
+
+            new_raw_list.append({'time':time, 'flux':flux})
+
+        raw_list = new_raw_list 
+
+        if outdir != 'none': 
+            joined = {'raw_list':raw_list}
+            outfile = outdir + '/' + ticstr.replace(' ', '_') + '_raw_lc.pickle'
+            
+            outfile = convert_to_absolute_path(outfile)
+
+            with open(outfile, 'wb') as handle:
+                pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+    if not data_found: 
+        raw_list = []
+
+    if logdir != 'none': 
+            logfile = logdir + '/' + ticstr.replace(" ",'_')+'_log.pickle'
+
+            logfile = convert_to_absolute_path(logfile)
+            if os.path.exists(logfile): 
+                with open(logfile, 'rb') as f: 
+                    content = pickle.load(f)
+                    content['sectors']=len(raw_list)
+
+            else: 
+                content = {'sectors':len(raw_list)}
+
+            with open(logfile, 'wb') as f: 
+                    pickle.dump(content, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    return raw_list, data_found
 
 def preprocess(
     raw_list: list,
