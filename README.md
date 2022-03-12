@@ -13,5 +13,5 @@ and then import it from anywhere else on your computer.
 ## Miscellaneous Notes
 * **Colab Setup:** 1). ```pip3``` install ```wotan```, ```transitleastsquares```, and ```lightkurve``` 2). install fortan  via  ```sudo apt-get install gfortran``` 3). Update ```matplotlib``` version via ```pip3 install 'matplotlib==3.3.1'``` 
 
-## About this repo
+## About this repository
 ![Visualization of this repo](./diagram.svg)
