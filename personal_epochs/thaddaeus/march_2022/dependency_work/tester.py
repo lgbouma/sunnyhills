@@ -1,5 +1,5 @@
 import numpy as np
-import astropy 
+#import astropy 
 #import wotan 
-import transitleastsquares
+#import transitleastsquares
 print(np.__version__)
