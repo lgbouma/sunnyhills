@@ -27,10 +27,14 @@ def download(
     # get the light curve
     data_found = False
     
+    '''
     lcset = lk.search_lightcurve(ticstr) # otherwise it'll fail for TIC IDs without 120 second cadence data.
     if len(lcset) > 0:
         lcc = lcset[(lcset.author=='SPOC') & (lcset.exptime.value==120)].download_all()
         data_found = True
+    '''
+
+    lcc = lk.search_lightcurve(ticstr).download_all() # FIX THIS! 
 
     # select only the two-minute cadence SPOC-reduced data; convert to a list.
     # note that this conversion approach works for any LightCurveCollection
@@ -79,10 +83,9 @@ def download(
             joined = {'raw_list':raw_list}
             outfile = outdir + '/' + ticstr.replace(' ', '_') + '_raw_lc.pickle'
             
-            outfile = convert_to_absolute_path(outfile)
-
             with open(outfile, 'wb') as handle:
                 pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
 
     if not data_found: 
         raw_list = []
@@ -215,7 +218,6 @@ def preprocess(
     if outdir != 'none': 
         outfile = outdir+'/'+ticstr.replace(' ','_')+'_lc.pickle'
         joined = {'stitched_lc':lc_list, 'stitched_trend':trend_list, 'stitched_raw':raw_list}
-        outfile = convert_to_absolute_path(outfile)
         with open(outfile, 'wb') as handle:
             pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
@@ -259,26 +261,6 @@ def download_and_preprocess(
         stitched_lc, stitched_trend, stitched_raw = (np.array([]), np.array([]), np.array([]))
     
     return stitched_lc, stitched_trend, stitched_raw, data_found
-
-def convert_to_absolute_path(rel_path): # --> remove this! (?) 
-    import os 
-    import platform 
-    full_path = os.path.abspath('')
-    rel_path = './personal_epochs/thaddaeus/march_2022/misc/log'
-    
-    sys = platform.system()
-
-    if sys=='Windows': 
-        rel_path = rel_path.replace('./', '\\')
-        rel_path = rel_path.replace('/', '\\')
-
-    else: 
-        rel_path = rel_path[1:]
-
-    break_index = full_path.index('sunnyhills')
-    abs_path = full_path[0:break_index+10] + rel_path
-
-    return abs_path 
 
 ## PERIOD SEARCH ROUTINES ##
 
