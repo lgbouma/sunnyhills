@@ -1,3 +1,3 @@
-import lightkurve as lk
-lcc = lk.search_lightcurve('TIC_82525365').download_all()
-print(lcc)
+import numpy as np
+x = np.array([])
+print(np.concatenate((x, [1,2,3])))

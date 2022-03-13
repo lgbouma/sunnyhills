@@ -22,7 +22,6 @@ def download(
     import lightkurve as lk 
     import os 
     import pickle 
-    from sunnyhills.pipeline_functions import convert_to_absolute_path
 
     # get the light curve
     data_found = False
@@ -34,7 +33,9 @@ def download(
         data_found = True
     '''
 
-    lcc = lk.search_lightcurve(ticstr).download_all() # FIX THIS! 
+    lcc = lk.search_lightcurve(ticstr.replace('_', ' ')).download_all() # FIX THIS! 
+    if len(lcc)>0: 
+        data_found = True 
 
     # select only the two-minute cadence SPOC-reduced data; convert to a list.
     # note that this conversion approach works for any LightCurveCollection
@@ -56,29 +57,34 @@ def download(
 
         raw_list = [_l for _l in raw_list if _l.meta['FLUX_ORIGIN']=='pdcsap_flux']
         
-        new_raw_list = []
+        if len(raw_list) == 0: 
+            data_found = False 
 
-        for lc in raw_list: 
-            time = lc.time.value
-            flux = lc.pdcsap_flux.value
-            qual = lc.quality.value
+        if data_found: 
+            new_raw_list = []
 
-            # remove non-zero quality flags
-            sel = (qual == 0)
+            for lc in raw_list: 
+                time = lc.time.value
+                flux = lc.pdcsap_flux.value
+                qual = lc.quality.value
 
-            time = time[sel]
-            flux = flux[sel]
+                # remove non-zero quality flags
+                sel = (qual == 0)
 
-            not_nan_mask = ~np.isnan(flux)
-            time, flux = (time[not_nan_mask], flux[not_nan_mask])
+                time = time[sel]
+                flux = flux[sel]
 
-            # normalize around 1
-            flux /= np.nanmedian(flux)
+                not_nan_mask = ~np.isnan(flux)
+                time, flux = (time[not_nan_mask], flux[not_nan_mask])
 
-            new_raw_list.append({'time':time, 'flux':flux})
+                # normalize around 1
+                flux /= np.nanmedian(flux)
 
-        raw_list = new_raw_list 
+                new_raw_list.append({'time':time, 'flux':flux})
 
+            raw_list = new_raw_list 
+    
+    if data_found: 
         if outdir != 'none': 
             joined = {'raw_list':raw_list}
             outfile = outdir + '/' + ticstr.replace(' ', '_') + '_raw_lc.pickle'
@@ -139,7 +145,6 @@ def preprocess(
     from wotan import flatten, slide_clip
     from astropy.stats import sigma_clip
     import pickle
-    from sunnyhills.pipeline_functions import convert_to_absolute_path
     
     lc_list = [] # for detrended and "cleaned" light curves
     trend_list = []
@@ -185,19 +190,22 @@ def preprocess(
     lightcurves = []
     for i in range(len(lc_list)): 
         lc_obj = lk.LightCurve(time=lc_list[i]['time'], flux=lc_list[i]['flux'])
+        lightcurves.append(lc_obj)
 
-    stiched_lc = lk.stitch(lightcurves)
+    stitched_lc = lk.LightCurveCollection.stitch(lightcurves, corrector_func=None)
 
     stitched_time = stitched_lc.time.value
     stitched_flux = stitched_lc.flux.value
 
     stitched_lc = {'time':stitched_time, 'flux':stitched_flux}
 
-    trends = []
+    trend_times = np.array([])
+    
     for i in range(len(lc_list)): 
         lc_obj = lk.LightCurve(time=trend_list[i]['time'], flux=trend_list[i]['flux'])
+        trends.append(lc_obj)
 
-    stiched_trend = lk.stitch(trends)
+    stitched_trend = lk.LightCurveCollection.stitch(trends, corrector_func=None)
 
     stitched_time = stitched_trend.time.value
     stitched_flux = stitched_trend.flux.value
@@ -207,8 +215,9 @@ def preprocess(
     raw_objs = []
     for i in range(len(lc_list)): 
         lc_obj = lk.LightCurve(time=raw_list[i]['time'], flux=raw_list[i]['flux'])
+        raw_objs.append(lc_obj)
 
-    stiched_raw = lk.stitch(raw_objs)
+    stitched_raw = lk.LightCurveCollection.stitch(raw_objs, corrector_func=None)
 
     stitched_time = stitched_raw.time.value
     stitched_flux = stitched_raw.flux.value
