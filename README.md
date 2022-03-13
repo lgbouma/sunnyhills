@@ -1,4 +1,4 @@
-https://github.com/HarritonResearchLab/sunnyhills/workflows/python-app/badge.svg
+![build status](https://github.com/HarritonResearchLab/sunnyhills/workflows/pytesting/badge.svg)
 # sunnyhills
 
 ## Installing the `sunnyhills` python package
