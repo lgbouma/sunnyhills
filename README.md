@@ -1,3 +1,4 @@
+https://github.com/HarritonResearchLab/sunnyhills/workflows/python-app/badge.svg
 # sunnyhills
 
 ## Installing the `sunnyhills` python package
