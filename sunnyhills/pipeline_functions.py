@@ -141,7 +141,6 @@ def preprocess(
     """
 
     import numpy as np 
-    import lightkurve as lk 
     from wotan import flatten, slide_clip
     from astropy.stats import sigma_clip
     import pickle
@@ -187,42 +186,30 @@ def preprocess(
 
     # do stitching!  ---> make this more efficient! 
 
-    lightcurves = []
+    lc_times = np.array([])
+    lc_fluxes = np.array([])
     for i in range(len(lc_list)): 
-        lc_obj = lk.LightCurve(time=lc_list[i]['time'], flux=lc_list[i]['flux'])
-        lightcurves.append(lc_obj)
+        lc_times = np.concatenate((lc_times, lc_list[i]['time']))
+        lc_fluxes = np.concatenate((lc_fluxes, lc_list[i]['flux']))
 
-    stitched_lc = lk.LightCurveCollection.stitch(lightcurves, corrector_func=None)
-
-    stitched_time = stitched_lc.time.value
-    stitched_flux = stitched_lc.flux.value
-
-    stitched_lc = {'time':stitched_time, 'flux':stitched_flux}
+    stitched_lc = {'time':lc_times, 'flux':lc_fluxes}
 
     trend_times = np.array([])
+    trend_fluxes = np.array([])
     
     for i in range(len(lc_list)): 
-        lc_obj = lk.LightCurve(time=trend_list[i]['time'], flux=trend_list[i]['flux'])
-        trends.append(lc_obj)
+        trend_times = np.concatenate((trend_times, trend_list[i]['time']))
+        trend_fluxes = np.concatenate((trend_fluxes, trend_list[i]['flux']))
 
-    stitched_trend = lk.LightCurveCollection.stitch(trends, corrector_func=None)
+    stitched_trend = {'time':trend_times, 'flux':trend_fluxes}
 
-    stitched_time = stitched_trend.time.value
-    stitched_flux = stitched_trend.flux.value
-
-    stitched_trend = {'time':stitched_time, 'flux':stitched_flux}
-
-    raw_objs = []
+    raw_times = np.array([])
+    raw_fluxes = np.array([])
     for i in range(len(lc_list)): 
-        lc_obj = lk.LightCurve(time=raw_list[i]['time'], flux=raw_list[i]['flux'])
-        raw_objs.append(lc_obj)
+        raw_times = np.concatenate((raw_times, raw_list[i]['time']))
+        raw_fluxes = np.concatenate((raw_fluxes, raw_list[i]['flux']))
 
-    stitched_raw = lk.LightCurveCollection.stitch(raw_objs, corrector_func=None)
-
-    stitched_time = stitched_raw.time.value
-    stitched_flux = stitched_raw.flux.value
-
-    stitched_raw = {'time':stitched_time, 'flux':stitched_flux}
+    stitched_raw = {'time':raw_times, 'flux':raw_fluxes}
 
     if outdir != 'none': 
         outfile = outdir+'/'+ticstr.replace(' ','_')+'_lc.pickle'
@@ -303,15 +290,12 @@ def run_bls(stitched_lc,
 
     from astropy.timeseries import BoxLeastSquares
     import numpy as np
-    import matplotlib.pyplot as plt
 
     time = stitched_lc['time']
     flux = stitched_lc['flux']
 
     durations = np.array(bls_params['durations'])
-
     bls_model = BoxLeastSquares(t=time, y=flux)
-
     results = bls_model.autopower(durations, frequency_factor=bls_params['freq_factor'], 
                             minimum_period=bls_params['min_per'], 
                             maximum_period=bls_params['max_per'],
@@ -321,9 +305,7 @@ def run_bls(stitched_lc,
     period = results.period[index]
     t0 = results.transit_time[index]
     duration = results.duration[index]
-    
     in_transit = bls_model.transit_mask(time, period, 2*duration, t0)
-
     if compute_stats: 
         stats = bls_model.compute_stats(period, duration, t0)
         return results, bls_model, in_transit, stats
