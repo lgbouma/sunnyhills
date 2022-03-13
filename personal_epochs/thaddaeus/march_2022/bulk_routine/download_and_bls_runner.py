@@ -32,4 +32,36 @@ def run_bulk_download_and_bls(
         except: 
             continue  
 
-run_bulk_download_and_bls()
+#run_bulk_download_and_bls()
+
+def run_bulk_download(
+    key: str = './data/current/current_key.csv', 
+    lc_out_dir: str = './data/current/processed/lightcurves', 
+    results_file: str = './personal_epochs/thaddaeus/march_2022/bulk_routine/bulk_cursory.csv'): 
+
+    import numpy as np 
+    import pandas as pd 
+    from sunnyhills.pipeline_functions import download, preprocess 
+    from tqdm import tqdm 
+
+    df = pd.read_csv(key)
+
+    tic_ids = np.array(df['TIC_ID'])
+
+    downloaded = 0
+
+    with open(results_file, 'w') as f: 
+        f.write('TIC_ID'+'\n')
+
+    for tic_id in tqdm(tic_ids):
+        try: 
+            raw_lc, data_found = download(ticstr=tic_id)
+            if data_found: 
+                stitched_lc, stitched_trend, stitched_raw = preprocess(raw_list=raw_lc, ticstr=tic_id, outdir=lc_out_dir)
+                with open(results_file, 'a'): 
+                    f.write(tic_id+'\n')
+                    downloaded += 1
+        except: 
+            continue  
+
+run_bulk_download()

@@ -1,0 +1,388 @@
+ 1%|▌                                                                                             | 6/939 [02:15<5:47:10, 22.33s/it]WARNING: File may have been truncated: actual file length (1572864) is smaller than the expected size (1935360) [astropy.io.fits.file]
+  1%|▉                                                                                             | 9/939 [02:57<5:04:03, 19.62s/it]Warning: 30% (5871/19412) of the cadences will be ignored due to the quality mask (quality_bitmask=175).
+Warning: 32% (408/1288) of the cadences will be ignored due to the quality mask (quality_bitmask=175).
+  1%|█                                                                                            | 11/939 [04:18<8:09:20, 31.64s/it]No data found for target "TIC 468344752".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  1%|█▍                                                                                           | 14/939 [04:26<3:08:23, 12.22s/it]No data found for target "TIC 72162112".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  2%|█▋                                                                                           | 17/939 [05:07<3:17:45, 12.87s/it]Warning: 32% (408/1288) of the cadences will be ignored due to the quality mask (quality_bitmask=175).
+  2%|██▏                                                                                          | 22/939 [07:27<5:18:40, 20.85s/it]No data found for target "TIC 59276615".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  2%|██▎                                                                                          | 23/939 [07:30<3:56:02, 15.46s/itN 
+o data found for target "TIC 59276613".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  3%|██▍                                                                                          | 24/939 [07:33<2:57:49, 11.66s/itN 
+o data found for target "TIC 27960225".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  3%|██▉                                                                                          | 30/939 [09:46<4:55:09, 19.48s/it]No data found for target "TIC 102390394".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  4%|███▍                                                                                         | 35/939 [12:07<6:18:42, 25.14s/it]No data found for target "TIC 168553269".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  4%|███▊                                                                                         | 39/939 [12:42<3:05:04, 12.34s/it]No data found for target "TIC 400502724".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  5%|████▎                                                                                        | 43/939 [12:51<1:11:34,  4.79s/it]No data found for target "TIC 94671603".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  5%|████▎                                                                                        | 44/939 [12:54<1:02:35,  4.20s/itN 
+o data found for target "TIC 94726121".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  5%|████▊                                                                                        | 48/939 [14:15<4:15:10, 17.18s/it]No data found for target "TIC 257570578".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  6%|█████▎                                                                                       | 54/939 [14:39<1:19:39,  5.40s/it]No data found for target "TIC 150906224".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  6%|█████▍                                                                                       | 55/939 [14:41<1:03:41,  4.32s/itN 
+o data found for target "TIC 434111079".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  6%|█████▋                                                                                       | 57/939 [14:49<1:03:15,  4.30s/it]No data found for target "TIC 177291022".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  6%|█████▊                                                                                         | 58/939 [14:51<53:48,  3.66s/itN 
+o data found for target "TIC 226102812".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  6%|██████                                                                                         | 60/939 [14:56<46:06,  3.15s/it]No data found for target "TIC 197804100".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  7%|██████▎                                                                                        | 62/939 [15:02<44:01,  3.01s/it]No data found for target "TIC 130810483".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  7%|██████▎                                                                                        | 63/939 [15:05<41:51,  2.87s/itW 
+arning: 30% (5871/19412) of the cadences will be ignored due to the quality mask (quality_bitmask=175).
+Warning: 32% (408/1288) of the cadences will be ignored due to the quality mask (quality_bitmask=175).
+  7%|██████▍                                                                                      | 65/939 [17:25<7:43:37, 31.83s/it]No data found for target "TIC 35488490".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  7%|██████▋                                                                                      | 67/939 [17:33<4:18:51, 17.81s/it]No data found for target "TIC 302601590".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  7%|██████▋                                                                                      | 68/939 [17:35<3:12:51, 13.28s/itN 
+o data found for target "TIC 214833565".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  7%|██████▊                                                                                      | 69/939 [17:37<2:22:11,  9.81s/itN 
+o data found for target "TIC 284066253".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  7%|██████▉                                                                                      | 70/939 [17:40<1:50:21,  7.62s/itN 
+o data found for target "TIC 342626499".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  8%|███████▎                                                                                     | 74/939 [17:55<1:11:41,  4.97s/it]No data found for target "TIC 408345985".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  8%|███████▌                                                                                       | 75/939 [17:57<59:21,  4.12s/itN 
+o data found for target "TIC 84770595".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  8%|███████▊                                                                                     | 79/939 [18:38<2:43:41, 11.42s/it]No data found for target "TIC 114795088".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  9%|███████▉                                                                                     | 80/939 [18:41<2:07:20,  8.90s/itN 
+o data found for target "TIC 344406503".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  9%|████████                                                                                     | 81/939 [18:44<1:43:01,  7.20s/itN 
+o data found for target "TIC 215284001".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  9%|████████▏                                                                                    | 83/939 [18:54<1:31:37,  6.42s/it]No data found for target "TIC 262526895".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  9%|████████▎                                                                                    | 84/939 [18:57<1:14:33,  5.23s/itN 
+o data found for target "TIC 450158024".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  9%|████████▌                                                                                    | 86/939 [19:42<3:48:29, 16.07s/it]No data found for target "TIC 453783283".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  9%|████████▌                                                                                    | 87/939 [19:45<2:52:52, 12.17s/itN 
+o data found for target "TIC 363930083".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+  9%|████████▊                                                                                    | 89/939 [19:49<1:37:47,  6.90s/it]No data found for target "TIC 135410440".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 10%|█████████                                                                                    | 91/939 [19:58<1:21:25,  5.76s/it]No data found for target "TIC 4110097".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 10%|█████████                                                                                    | 92/939 [20:00<1:06:13,  4.69s/itN 
+o data found for target "TIC 610061960".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 10%|█████████▍                                                                                     | 93/939 [20:02<55:54,  3.97s/itN 
+o data found for target "TIC 229573730".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 10%|█████████▌                                                                                     | 94/939 [20:05<49:28,  3.51s/itN 
+o data found for target "TIC 292166042".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 10%|█████████▌                                                                                     | 95/939 [20:07<43:10,  3.07s/itN 
+o data found for target "TIC 28750861".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 10%|█████████▋                                                                                     | 96/939 [20:09<38:50,  2.76s/itW 
+arning: 32% (408/1288) of the cadences will be ignored due to the quality mask (quality_bitmask=175).
+ 10%|█████████▌                                                                                   | 97/939 [20:27<1:41:49,  7.26s/it]No data found for target "TIC 202950781".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 10%|█████████▋                                                                                   | 98/939 [20:28<1:19:01,  5.64s/itN 
+o data found for target "TIC 24348864".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 11%|█████████▊                                                                                   | 99/939 [20:31<1:04:30,  4.61s/itN 
+o data found for target "TIC 279609261".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 11%|█████████▉                                                                                  | 101/939 [21:15<3:35:09, 15.40s/it]No data found for target "TIC 361939158".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 11%|█████████▉                                                                                  | 102/939 [21:17<2:39:28, 11.43s/itN 
+o data found for target "TIC 1335522317".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 11%|██████████                                                                                  | 103/939 [21:20<2:00:48,  8.67s/itN 
+o data found for target "TIC 217064573".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 11%|██████████▎                                                                                 | 105/939 [21:25<1:20:24,  5.78s/it]No data found for target "TIC 80469061".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 11%|██████████▍                                                                                 | 106/939 [21:29<1:09:30,  5.01s/itN 
+o data found for target "TIC 113933204".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 11%|██████████▍                                                                                 | 107/939 [21:32<1:02:31,  4.51s/itN 
+o data found for target "TIC 229463472".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 12%|██████████▉                                                                                 | 111/939 [22:44<4:14:10, 18.42s/it]No data found for target "TIC 69644320".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 12%|███████████▎                                                                                | 116/939 [23:43<2:25:07, 10.58s/it]No data found for target "TIC 237589630".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 12%|███████████▍                                                                                | 117/939 [23:46<1:53:32,  8.29s/itN 
+o data found for target "TIC 408236807".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 13%|███████████▋                                                                                | 119/939 [23:52<1:17:26,  5.67s/it]No data found for target "TIC 400896721".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 13%|███████████▊                                                                                | 120/939 [23:55<1:04:05,  4.69s/itN 
+o data found for target "TIC 81947141".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 13%|████████████▏                                                                               | 124/939 [24:24<1:29:14,  6.57s/it]No data found for target "TIC 82204392".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 14%|████████████▋                                                                                 | 127/939 [24:31<52:58,  3.91s/it]No data found for target "TIC 315190296".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 14%|████████████▊                                                                                 | 128/939 [24:34<49:13,  3.64s/itN 
+o data found for target "TIC 113426433".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 14%|████████████▉                                                                               | 132/939 [26:20<6:33:27, 29.25s/it]No data found for target "TIC 347436106".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 14%|█████████████                                                                               | 133/939 [26:22<4:42:16, 21.01s/itN 
+o data found for target "TIC 74226900".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 14%|█████████████▏                                                                              | 134/939 [26:24<3:25:29, 15.32s/itN 
+o data found for target "TIC 457590158".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 14%|█████████████▏                                                                              | 135/939 [26:26<2:31:51, 11.33s/itN 
+o data found for target "TIC 54933794".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 14%|█████████████▎                                                                              | 136/939 [26:28<1:53:04,  8.45s/itN 
+o data found for target "TIC 172216273".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 15%|█████████████▌                                                                              | 138/939 [26:39<1:34:22,  7.07s/it]No data found for target "TIC 159925317".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 15%|█████████████▌                                                                              | 139/939 [26:41<1:16:52,  5.77s/itN 
+o data found for target "TIC 277840907".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 15%|█████████████▋                                                                              | 140/939 [26:44<1:03:25,  4.76s/itN 
+o data found for target "TIC 276224844".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 15%|██████████████▏                                                                               | 142/939 [26:51<57:39,  4.34s/it]No data found for target "TIC 365964758".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 15%|██████████████▎                                                                               | 143/939 [26:54<49:52,  3.76s/itN 
+o data found for target "TIC 26538613".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 15%|██████████████▍                                                                               | 144/939 [26:58<51:05,  3.86s/itN 
+o data found for target "TIC 157846137".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 15%|██████████████▌                                                                               | 145/939 [27:00<45:05,  3.41s/itN 
+o data found for target "TIC 399100329".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 16%|██████████████▋                                                                               | 147/939 [27:06<41:15,  3.13s/it]No data found for target "TIC 27457247".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 16%|██████████████▊                                                                               | 148/939 [27:09<43:05,  3.27s/itN 
+o data found for target "TIC 99964558".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 16%|██████████████▉                                                                               | 149/939 [27:11<37:13,  2.83s/itN 
+o data found for target "TIC 375058755".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 16%|██████████████▊                                                                             | 151/939 [27:47<2:27:28, 11.23s/it]No data found for target "TIC 155008368".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 16%|██████████████▉                                                                             | 152/939 [27:50<1:53:01,  8.62s/itN 
+o data found for target "TIC 386109826".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 16%|███████████████                                                                             | 154/939 [27:58<1:26:46,  6.63s/it]No data found for target "TIC 389413306".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 17%|███████████████▏                                                                            | 155/939 [28:01<1:13:00,  5.59s/itN 
+o data found for target "TIC 83211264".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 17%|███████████████▌                                                                              | 156/939 [28:03<59:22,  4.55s/itN 
+o data found for target "TIC 374525618".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 17%|███████████████▌                                                                            | 159/939 [28:15<1:00:14,  4.63s/it]No data found for target "TIC 99135109".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 17%|███████████████▊                                                                            | 161/939 [28:57<3:08:58, 14.57s/it]No data found for target "TIC 72506595".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 17%|███████████████▉                                                                            | 163/939 [29:04<1:56:47,  9.03s/it]No data found for target "TIC 236960684".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 17%|████████████████                                                                            | 164/939 [29:07<1:33:36,  7.25s/itN 
+o data found for target "TIC 286397260".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 18%|████████████████▏                                                                           | 165/939 [29:11<1:18:27,  6.08s/itN 
+o data found for target "TIC 403509140".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 18%|████████████████▎                                                                           | 166/939 [29:14<1:08:24,  5.31s/itN 
+o data found for target "TIC 386839497".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 18%|████████████████▉                                                                           | 173/939 [32:41<7:22:54, 34.69s/it]No data found for target "TIC 7267868".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 19%|█████████████████                                                                           | 174/939 [32:44<5:21:56, 25.25s/itN 
+o data found for target "TIC 461548401".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 19%|█████████████████▍                                                                          | 178/939 [33:06<2:30:33, 11.87s/it]No data found for target "TIC 113550277".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 19%|█████████████████▌                                                                          | 179/939 [33:09<1:56:40,  9.21s/itN 
+o data found for target "TIC 366627719".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 19%|█████████████████▋                                                                          | 180/939 [33:11<1:28:58,  7.03s/itN 
+o data found for target "TIC 35260896".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 19%|█████████████████▋                                                                          | 181/939 [33:14<1:12:49,  5.77s/itN 
+o data found for target "TIC 102801777".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 19%|██████████████████▏                                                                           | 182/939 [33:16<57:52,  4.59s/itN 
+o data found for target "TIC 38903446".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 19%|██████████████████▎                                                                           | 183/939 [33:18<49:52,  3.96s/itN 
+o data found for target "TIC 360704473".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 20%|██████████████████▍                                                                           | 184/939 [33:22<48:52,  3.88s/itN 
+o data found for target "TIC 50236446".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 20%|██████████████████▌                                                                         | 190/939 [34:12<2:16:08, 10.91s/it]No data found for target "TIC 60851503".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 21%|██████████████████▉                                                                         | 193/939 [34:23<1:17:48,  6.26s/it]No data found for target "TIC 468266962".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 21%|███████████████████                                                                         | 195/939 [34:35<1:19:14,  6.39s/it]No data found for target "TIC 332573715".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 21%|███████████████████▏                                                                        | 196/939 [34:37<1:04:45,  5.23s/itN 
+o data found for target "TIC 309058698".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 21%|███████████████████▍                                                                        | 199/939 [35:35<3:38:52, 17.75s/it]No data found for target "TIC 98955909".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 22%|███████████████████▊                                                                        | 202/939 [35:41<1:31:38,  7.46s/it]No data found for target "TIC 303365456".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 22%|████████████████████                                                                        | 205/939 [36:12<2:13:20, 10.90s/it]No data found for target "TIC 95742017".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 22%|████████████████████▏                                                                       | 206/939 [36:15<1:43:22,  8.46s/itN 
+o data found for target "TIC 345840638".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 22%|████████████████████▎                                                                       | 207/939 [36:18<1:26:29,  7.09s/itN 
+o data found for target "TIC 425100677".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 23%|████████████████████▊                                                                       | 212/939 [37:06<1:50:42,  9.14s/it]No data found for target "TIC 35583188".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 23%|████████████████████▊                                                                       | 213/939 [37:08<1:27:07,  7.20s/itN 
+o data found for target "TIC 148898737".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 23%|████████████████████▉                                                                       | 214/939 [37:11<1:09:02,  5.71s/itN 
+o data found for target "TIC 148949324".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 23%|█████████████████████▎                                                                      | 218/939 [37:30<1:04:54,  5.40s/it]No data found for target "TIC 171948035".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 23%|█████████████████████▉                                                                        | 219/939 [37:33<54:37,  4.55s/itN 
+o data found for target "TIC 157790657".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 24%|█████████████████████▊                                                                      | 222/939 [38:26<2:40:52, 13.46s/it]No data found for target "TIC 344624947".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 24%|█████████████████████▉                                                                      | 224/939 [38:51<2:43:36, 13.73s/it]No data found for target "TIC 47611150".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 24%|██████████████████████▏                                                                     | 226/939 [38:58<1:42:00,  8.58s/it]No data found for target "TIC 130942722".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 24%|██████████████████████▏                                                                     | 227/939 [39:00<1:19:56,  6.74s/itN 
+o data found for target "TIC 154927164".
+C:\Users\Research\.virtualenvs\trying_again\.wotan_work\lib\site-packages\lightkurve\search.py:414: LightkurveWarning: Cannot download from an empty search result.
+  warnings.warn(
+ 24%|██████████████████████▌                                                                     | 230/939 [39:14<1:01:05,  5.17s/it] 
