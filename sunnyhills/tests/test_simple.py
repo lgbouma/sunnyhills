@@ -6,4 +6,4 @@ class TestAutotesting:
         assert 4 == 2+2
 
     def test_subtraction(self): 
-        assert 5 = 10-5
+        assert 5 == 10-5
