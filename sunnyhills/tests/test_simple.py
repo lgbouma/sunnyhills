@@ -3,7 +3,7 @@ import sunnyhills
 class TestAutotesting:
 
     def test_addition(self):
-        assert 4 == 4
-    
-    def test_basic(self): 
-        assert 2 == sunnyhills.basic.get_two()
+        assert 4 == 2+2
+
+    def test_subtraction(self): 
+        assert 5 = 10-5
