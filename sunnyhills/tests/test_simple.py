@@ -1,4 +1,4 @@
-import sunnyhills.sunnyhills as sunnyhills 
+import sunnyhills 
 
 class TestAutotesting:
 
