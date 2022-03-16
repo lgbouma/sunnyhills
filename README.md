@@ -1,4 +1,4 @@
-![build status](https://github.com/HarritonResearchLab/sunnyhills/workflows/pytesting/badge.svg)
+![CI](https://github.com/HarritonResearchLab/sunnyhills/actions/workflows/main.yml/badge.svg?event=push)
 # sunnyhills
 
 ## Installing the `sunnyhills` python package
