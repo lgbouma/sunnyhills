@@ -1,3 +1,4 @@
+from email.policy import strict
 import os 
 import numpy as np
 import pickle 
@@ -15,14 +16,25 @@ for file in os.listdir(data_dir):
             time = stitched_lc['time']
             flux = stitched_lc['flux']
 
+            raw_lc = content['stitched_raw'][0]
+            print(type(content))
+
+            break 
+
+            trend_lc = content['stitched_trend'][0]
+
             results, bls_model, in_transit, stats = run_bls(stitched_lc)
 
-            fig, axs = plt.subplots(1, 2, figsize=(6, 3))
-            fig.tight_layout()
+            fig = plt.figure(constrained_layout=True, figsize=(7, 7))
+            mosaic = """
+            ab
+            cd"""
 
+            ax_dict = fig.subplot_mosaic(mosaic)
+            
             period = results.period[np.argmax(results.power)]
 
-            ax = axs[0]
+            ax = ax_dict['a']
             ax.axvline(period, alpha=0.4, lw=3)
             for n in range(2, 10):
                 ax.axvline(n*period, alpha=0.4, lw=1, linestyle="dashed")
@@ -35,7 +47,7 @@ for file in os.listdir(data_dir):
             t0 = results.transit_time[index]
             duration = results.duration[index]
 
-            ax = axs[1]
+            ax = ax_dict['b']
             x = (time - t0 + 0.5*period) % period - 0.5*period
             m = np.abs(x) < 0.5
             ax.scatter(
@@ -54,7 +66,15 @@ for file in os.listdir(data_dir):
             ax.set_xlabel("Time from mid-transit (days)")
             ax.set_ylabel("Flux")
 
+            ax = ax_dict['c']
+
+            ax.scatter(raw_lc['time'], raw_lc['flux'])
+
+            ax.scatter(trend_lc['time'], trend_lc['flux'])
+
             plt.show()
 
             plt.clf()
             plt.close() 
+
+            break 
