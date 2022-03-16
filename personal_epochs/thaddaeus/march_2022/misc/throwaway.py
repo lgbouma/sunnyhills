@@ -1,3 +1,5 @@
-import numpy as np
-x = np.array([])
-print(np.concatenate((x, [1,2,3])))
+import pickle 
+with open('./data/current/processed/lightcurves/TIC_416358769_lc.pickle', 'rb') as handle:
+    content = pickle.load(handle)
+    print(content.keys())
+    print(content['stitched_raw'][0]['time'])

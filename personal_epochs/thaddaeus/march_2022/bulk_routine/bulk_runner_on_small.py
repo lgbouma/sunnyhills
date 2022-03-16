@@ -1,4 +1,3 @@
-from email.policy import strict
 import os 
 import numpy as np
 import pickle 
@@ -16,12 +15,11 @@ for file in os.listdir(data_dir):
             time = stitched_lc['time']
             flux = stitched_lc['flux']
 
-            raw_lc = content['stitched_raw'][0]
-            print(type(content))
-
-            break 
-
-            trend_lc = content['stitched_trend'][0]
+            raw_time = content['stitched_raw'][0]['time']
+            raw_flux = content['stitched_raw'][0]['flux']
+            
+            trend_time = content['stitched_trend'][0]['time']
+            trend_flux = content['stitched_trend'][0]['flux']
 
             results, bls_model, in_transit, stats = run_bls(stitched_lc)
 
@@ -68,9 +66,9 @@ for file in os.listdir(data_dir):
 
             ax = ax_dict['c']
 
-            ax.scatter(raw_lc['time'], raw_lc['flux'])
+            ax.scatter(raw_time, raw_flux)
 
-            ax.scatter(trend_lc['time'], trend_lc['flux'])
+            ax.scatter(trend_time, trend_flux)
 
             plt.show()
 
