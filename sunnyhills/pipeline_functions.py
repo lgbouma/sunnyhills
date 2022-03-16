@@ -144,23 +144,32 @@ def preprocess(
     from wotan import flatten, slide_clip
     from astropy.stats import sigma_clip
     import pickle
-    
-    lc_list = [] # for detrended and "cleaned" light curves
-    trend_list = []
+
+    lc_times = np.array([])
+    lc_fluxes = np.array([])
+    trend_times = np.array([])
+    trend_fluxes = np.array([])
+    raw_times = np.array([])
+    raw_fluxes = np.array([])
 
     for lc in raw_list:
 
         time = lc['time']
         flux = lc['flux']
 
-        # remove outliers before local window detrending
+        # remove outliers before local window detrending-- wotan does this before detrend, and sigma clip after detrend 
         clipped_flux = slide_clip(time, flux, window_length=0.5, low=3,
                                   high=2, method='mad', center='median')
+
+        clipped_mask = ~np.isnan(clipped_flux)
+
+        clipped_time = time[clipped_mask]
+        clipped_flux = clipped_flux[clipped_mask]
 
         # see https://wotan.readthedocs.io/en/latest/Usage.html for other
         # possible options.
         flat_flux, trend_flux = flatten(
-            time, clipped_flux, return_trend=True,
+            clipped_time, clipped_flux, return_trend=True,
             method=dtrdict['method'],
             break_tolerance=dtrdict['break_tolerance'],
             window_length=dtrdict['window_length'],
@@ -175,45 +184,25 @@ def preprocess(
 
         flat_mask = np.logical_and(flat_flux<bounds[1], flat_flux>bounds[0])
 
-        flat_time = time[flat_mask]
+        flat_time = clipped_time[flat_mask]
         flat_flux = flat_flux[flat_mask]
 
-        processed_lc = {'time':flat_time, "flux":flat_flux}
-        trend_lc = {'time':time, 'flux':trend_flux}
+        lc_times = np.concatenate((lc_times, flat_time))
+        lc_fluxes = np.concatenate((lc_fluxes, flat_flux))
 
-        lc_list.append(processed_lc)
-        trend_list.append(trend_lc)
+        trend_times = np.concatenate((trend_times, clipped_time))
+        trend_fluxes = np.concatenate((trend_fluxes, trend_flux))
 
-    # do stitching!  ---> make this more efficient! 
-
-    lc_times = np.array([])
-    lc_fluxes = np.array([])
-    for i in range(len(lc_list)): 
-        lc_times = np.concatenate((lc_times, lc_list[i]['time']))
-        lc_fluxes = np.concatenate((lc_fluxes, lc_list[i]['flux']))
-
-    stitched_lc = {'time':lc_times, 'flux':lc_fluxes}
-
-    trend_times = np.array([])
-    trend_fluxes = np.array([])
+        raw_times = np.concatenate((raw_times, time))
+        raw_fluxes = np.concatenate((raw_fluxes, flux))
     
-    for i in range(len(lc_list)): 
-        trend_times = np.concatenate((trend_times, trend_list[i]['time']))
-        trend_fluxes = np.concatenate((trend_fluxes, trend_list[i]['flux']))
-
+    stitched_lc = {'time':lc_times, 'flux':lc_fluxes}
     stitched_trend = {'time':trend_times, 'flux':trend_fluxes}
-
-    raw_times = np.array([])
-    raw_fluxes = np.array([])
-    for i in range(len(lc_list)): 
-        raw_times = np.concatenate((raw_times, raw_list[i]['time']))
-        raw_fluxes = np.concatenate((raw_fluxes, raw_list[i]['flux']))
-
     stitched_raw = {'time':raw_times, 'flux':raw_fluxes}
 
     if outdir != 'none': 
         outfile = outdir+'/'+ticstr.replace(' ','_')+'_lc.pickle'
-        joined = {'stitched_lc':lc_list, 'stitched_trend':trend_list, 'stitched_raw':raw_list}
+        joined = {'stitched_lc':stitched_lc, 'stitched_trend':stitched_trend, 'stitched_raw':stitched_raw}
         with open(outfile, 'wb') as handle:
             pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
 

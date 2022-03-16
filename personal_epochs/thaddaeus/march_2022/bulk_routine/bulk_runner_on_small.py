@@ -8,8 +8,8 @@ data_dir = './data/current/processed/lightcurves'
 
 for file in os.listdir(data_dir):  
     if file!='.gitkeep': 
-        with open(data_dir+'/'+file,"rb") as f: 
-            content = pickle.load(f)
+        with open(data_dir+'/'+file,"rb") as handle: 
+            content = pickle.load(handle)
 
             stitched_lc = content['stitched_lc'][0]
             time = stitched_lc['time']
