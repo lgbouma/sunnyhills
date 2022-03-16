@@ -27,6 +27,6 @@ def check_download(tic_id: str = 'TIC_37777866', lc_dir='./data/current/processe
     if data_found: 
         stitched_lc, stitched_trend, stitched_raw = preprocess(raw_list=raw_lc, ticstr=tic_id, outdir=lc_dir)
 
-check_download()
+#check_download()
 
-#check_load()
+check_load()

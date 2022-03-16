@@ -65,8 +65,7 @@ def download(
 
             for lc in raw_list: 
                 time = lc.time.value
-                flux = lc.pdcsap_flux.value
-                print(type(time), type(flux))
+                flux = lc.flux.value
                 qual = lc.quality.value
 
                 # remove non-zero quality flags
