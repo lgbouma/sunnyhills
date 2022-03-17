@@ -11,12 +11,12 @@ def check_load():
         trend_time = content['stitched_trend']['time']
         trend_flux = content['stitched_trend']['flux']
 
-        raw_time = content['stitched_raw']['time']
-        raw_flux = content['stitched_raw']['flux']
+        #raw_time = content['stitched_raw']['time']
+        #aw_flux = content['stitched_raw']['flux']
 
 
         print(time)
-        print(raw_flux)
+        print(trend_flux)
 
 #check_load()
 
