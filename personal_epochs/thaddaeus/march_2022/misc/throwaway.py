@@ -11,12 +11,13 @@ def check_load():
         trend_time = content['stitched_trend']['time']
         trend_flux = content['stitched_trend']['flux']
 
-        #raw_time = content['stitched_raw']['time']
-        #aw_flux = content['stitched_raw']['flux']
+        raw_time = content['stitched_raw']['time']
+        raw_flux = content['stitched_raw']['flux']
 
 
         print(time)
         print(trend_flux)
+        print(raw_time, raw_flux)
 
 #check_load()
 
@@ -25,8 +26,9 @@ def check_download(tic_id: str = 'TIC_37777866', lc_dir='./data/current/processe
     raw_lc, data_found = download(ticstr=tic_id)
                 
     if data_found: 
-        stitched_lc, stitched_trend, stitched_raw = preprocess(raw_list=raw_lc, ticstr=tic_id, outdir=lc_dir)
+        stitched_lc, stitched_trend, stitched_raw = preprocess(raw_list=raw_lc, ticstr=tic_id, outdir=lc_dir) #lc_dir
+        
 
-#check_download()
+check_download()
 
 check_load()

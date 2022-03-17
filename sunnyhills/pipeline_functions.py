@@ -66,16 +66,19 @@ def download(
             for lc in raw_list: 
                 time = lc.time.value
                 flux = lc.flux.value
+
+                nan_mask = np.isnan(flux)
+
+                time = time[~nan_mask]
+                flux = np.array(flux[~nan_mask], dtype=float) 
+
                 qual = lc.quality.value
 
                 # remove non-zero quality flags
-                sel = (qual == 0)
+                sel = (qual[~nan_mask] == 0)
 
                 time = time[sel]
                 flux = flux[sel]
-
-                not_nan_mask = ~np.isnan(flux)
-                time, flux = (time[not_nan_mask], flux[not_nan_mask])
 
                 # normalize around 1
                 flux /= np.nanmedian(flux)
@@ -157,7 +160,7 @@ def preprocess(
         time = lc['time']
         flux = lc['flux']
 
-        print(type(flux))
+        #print(type(time), type(flux))
 
         # remove outliers before local window detrending-- wotan does this before detrend, and sigma clip after detrend 
         clipped_flux = slide_clip(time, flux, window_length=0.5, low=3,
@@ -205,9 +208,7 @@ def preprocess(
     if outdir != 'none': 
         outfile = outdir+'/'+ticstr.replace(' ','_')+'_lc.pickle'
         joined = {'stitched_lc':stitched_lc, 'stitched_trend':stitched_trend, 'stitched_raw':stitched_raw}
-        
-        print(joined)
-        
+                
         with open(outfile, 'wb') as handle:
             pickle.dump(joined, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
