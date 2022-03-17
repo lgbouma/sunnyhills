@@ -1,6 +1,6 @@
 ![CI](https://github.com/HarritonResearchLab/sunnyhills/actions/workflows/main.yml/badge.svg?event=push)
+https://img.shields.io/badge/python-3.7%20%7C%203.8-blue(https://pypi.python.org/pypi/ansicolortags/)
 # sunnyhills
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/)
 
 
 ## Installing the `sunnyhills` python package
