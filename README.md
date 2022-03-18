@@ -22,7 +22,7 @@ Finally, you should now be able to use everything in this perfectly working envi
 
 [1] I recommend pinning the Anaconda Prompt to your taskbar once you find it (for me it's located around ```C:\Users\Research\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Anaconda3 (64-bit)\Anaconda Prompt (miniconda3).lnk```). I wouldn't use the Anaconda Powershell Prompt because I didn't test this approach on it. 
 
-
+* Also note that you might have to launch VSCode from Anaconda Prompt (execute ```code```) after activating the virtual environment. 
 
 
 ## Miscellaneous Notes
