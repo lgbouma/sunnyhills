@@ -1,5 +1,7 @@
 ![CI](https://github.com/HarritonResearchLab/sunnyhills/actions/workflows/main.yml/badge.svg?event=push)
+![python versions](https://img.shields.io/badge/python-3.7%20%7C%203.8-blue)
 # sunnyhills
+
 
 ## Installing the `sunnyhills` python package
 
