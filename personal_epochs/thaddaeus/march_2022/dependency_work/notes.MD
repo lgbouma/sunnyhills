@@ -27,6 +27,18 @@
         * I'll make a dir with requirements for each new venv 
 * this [article](https://stackoverflow.com/questions/43256369/how-to-rename-a-virtualenv-in-python) was helpful 
 * this other [article](https://www.akamai.com/blog/developers/how-building-virtual-python-environment) also seemed helpful 
+# notes
+
+## Dated Notes
+* 3/16/2022
+    * On Windows at least, the command ```dir > a.txt | type a.txt``` would write the output of the command ```dir``` to the file ```a.txt```. If you want to *append* rather than write, you do ```dir >> a.txt | type a.txt```
+    * I am going to try and install miniconda in wsl and see if I can get it to work in WSL 
+        * ```C:\Users\Research\Downloads\Miniconda3-py37_4.11.0-Linux-x86_64.sh```
+        * WSL ```pwd``` gives ```/mnt/c/Users/Research```
+            * thus, execute ```bash /mnt/c/Users/Research/Downloads/Miniconda3-py37_4.11.0-Linux-x86_64.sh``` 
+        * Update: woah installing miniconda from wsl was so nice...I think this summer I'll back up everything on this computer then wipe off windows and replace it with some linux (e.g. ubuntu to start with the MacOS color theme), so I can see how much I like Linux. I wonder how old dieda's computer is...I could switch computers with him, wipe windows of his, 
+
+## Not Dated Notes
 
 * recall that python version is 3.8
 
