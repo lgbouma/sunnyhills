@@ -5,7 +5,7 @@
 
 
 ## Environment Setup
-1. Download [miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) (and despite the warning the installed gives, make sure to select the "Add Anaconda to my PATH enviroment variable``` option) 
+1. Download [miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) (and despite the warning the installed gives, make sure to select the "Add Anaconda to my PATH enviroment variable" option) 
 2. From Anaconda Prompt (miniconda3)<sup>1</sup>, execute ```conda create --name py37 python=3.7```
 3. Execute ```conda activate py37```
 4. Execute ```conda install astropy h5py beautifulsoup4 html5lib bleach pyyaml pandas sortedcontainers pytz setuptools mpmath bottleneck ipython pip```
