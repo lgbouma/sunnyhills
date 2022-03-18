@@ -1,20 +1,38 @@
 ![CI](https://github.com/HarritonResearchLab/sunnyhills/actions/workflows/main.yml/badge.svg?event=push)
-![python versions](https://img.shields.io/badge/python-3.7%20%7C%203.8-blue)
+![python versions](https://img.shields.io/badge/python-3.7-blue&logo=Python&style=Plastic)
+
 # sunnyhills
 
 
-## Installing the `sunnyhills` python package
+## Environment Setup
+1. Download [miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html) (and despite the warning the installed gives, make sure to select the "Add Anaconda to my PATH enviroment variable``` option) 
+2. From Anaconda Prompt (miniconda3)<sup>1</sup>, execute ```conda create --name py37 python=3.7```
+3. Execute ```conda activate py37```
+4. Execute ```conda install astropy h5py beautifulsoup4 html5lib bleach pyyaml pandas sortedcontainers pytz setuptools mpmath bottleneck ipython pip```
+5. Execute ```pip install -U transitleastsquares```
+6. Execute ```pip install -U wotan```
+7. ```cd``` into the top level ```sunnyhills``` directory on your machine within the conda prompt (for me this is ```cd Documents``` then ```cd GitHub``` then ```cd sunnyhills```)
+8. Execute the command ```conda install conda-build```
+9. Execute ```conda develop .```
+10. Execute ```pip install -e .```
+    * Note that if you ever want to *uninstall* the sunnyhills repo, you can use ```pip uninstall .``` or ```conda develop -u .```
+11. To start using this environment in VSCode, go to ```view``` then ```command palette``` then ```Python: Select Interpreter``` then click ```Enter interpreter path...``` then enter the path to the ```python.exe``` file within the environment folder oft this enviroment you just made. For me, this is something like ```C:\Users\Research\miniconda3\envs\py37\python.exe``` (note that you can find the environment under ```envs``` under ```miniconda3```)
 
-* `$ python setup.py develop`, when executed under the directory of this repository, will install the `sunnyhills` python package to
-your computer's working path.  It'll also let you edit code in `/sunnyhills/`,
-and then import it from anywhere else on your computer.
+Finally, you should now be able to use everything in this perfectly working environment! 
 
-* To setup the package locally for conda usage, first go to the conda environment prompt, then execute ```conda install conda-develop```. Then, navigate to this directory within the command line, and once you're in it, execute ```conda develop .```. After you've done this, execute ```pip install -e .``` and you should be good to go. If you ever want to *uninstall* the sunnyhills repo, you can use ```pip uninstall .``` or ```conda develop -u .``` (all thanks to this [link](https://web.archive.org/web/20220302135120/https://stackoverflow.com/questions/49474575/how-to-install-my-own-python-module-package-via-conda-and-watch-its-changes))
+[1] I recommend pinning the Anaconda Prompt to your taskbar once you find it (for me it's located around ```C:\Users\Research\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Anaconda3 (64-bit)\Anaconda Prompt (miniconda3).lnk```). I wouldn't use the Anaconda Powershell Prompt because I didn't test this approach on it. 
 
-    * Note that you may need to open vscode from the andaconda prompt within the activated environment for the changes to work (i.e. execute ```code```)
+
+
 
 ## Miscellaneous Notes
 * **Colab Setup:** 1). ```pip3``` install ```wotan```, ```transitleastsquares```, and ```lightkurve``` 2). install fortan  via  ```sudo apt-get install gfortran``` 3). Update ```matplotlib``` version via ```pip3 install 'matplotlib==3.3.1'``` 
+* **Installing the `sunnyhills` python package**
+    * Not really recommended way to do things anymore, just keeping it here for storage. 
+    * `$ python setup.py develop`, when executed under the directory of this repository, will install the `sunnyhills` python package to
+    your computer's working path.  It'll also let you edit code in `/sunnyhills/`,
+    and then import it from anywhere else on your computer.
+* **Shields**: pretty nice [website](https://shields.io/category/platform-support) for shields
 
 ## About this repository
 ![Visualization of this repo](./diagram.svg)
