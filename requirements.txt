@@ -60,12 +60,8 @@ pyreadline==2.1
 PySocks==1.7.1
 python-dateutil==2.8.2
 pytz==2021.3
-pyvo==1.2.1
-pywin32==302
-pywin32-ctypes==0.2.0
 PyYAML==6.0
 requests==2.27.1
-ruamel-yaml-conda==0.15.100
 scipy==1.7.3
 setuptools==58.0.4
 sip==4.19.13
