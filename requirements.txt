@@ -68,7 +68,6 @@ sip
 six==1.16.0
 sortedcontainers==2.4.0
 soupsieve==2.3.1
-sunnyhills==0.0.1
 tornado==6.1
 tqdm==4.63.0
 traitlets==5.1.1
